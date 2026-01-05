@@ -64,7 +64,7 @@ export function populateStatusDropdown() {
     const isLast = i === options.length - 1;
     
     return `
-      <button class="status-option w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''} ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}" data-status="${opt.name}">
+      <button class="status-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''} ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}" data-status="${opt.name}">
         <span class="w-2.5 h-2.5 rounded-full ${colors.bg}"></span>
         <span class="truncate">${opt.name}</span>
         ${isSelected ? '<svg class="w-4 h-4 ml-auto text-primary-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
@@ -81,7 +81,7 @@ export function populateLabelsDropdown() {
     const isLight = getLuminance(label.color) > 0.5;
     const isSelected = state.filters.labels.includes(label.name);
     return `
-      <button class="label-option w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}" data-label="${label.name}">
+      <button class="label-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}" data-label="${label.name}">
         <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: #${label.color}"></span>
         <span class="truncate">${label.name}</span>
         ${isSelected ? '<svg class="w-4 h-4 ml-auto text-primary-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
