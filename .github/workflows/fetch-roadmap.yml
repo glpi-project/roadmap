@@ -1,4 +1,4 @@
-name: Fetch Roadmap Data
+name: Deploy Roadmap
 
 on:
   # Run every 6 hours
@@ -6,21 +6,26 @@ on:
     - cron: '0 */6 * * *'
   # Allow manual trigger
   workflow_dispatch:
-  # Run on push to main (for initial setup)
+  # Run on push to main
   push:
     branches:
       - main
-    paths:
-      - 'scripts/fetch-roadmap.mjs'
-      - '.github/workflows/fetch-roadmap.yml'
+
+# Sets permissions of the GITHUB_TOKEN
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  fetch-roadmap:
+  # Fetch and update data
+  fetch-data:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: write
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -47,3 +52,31 @@ jobs:
           git add public/roadmap-data.json
           git diff --quiet --cached || git commit -m "chore: update roadmap data [skip ci]"
           git push
+
+  # Deploy to GitHub Pages
+  deploy:
+    needs: fetch-data
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Get latest after fetch-data committed
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
