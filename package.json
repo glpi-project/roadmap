@@ -1,0 +1,14 @@
+{
+  "name": "glpi-roadmap",
+  "version": "1.0.0",
+  "description": "Public roadmap Kanban board for GLPI",
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-roadmap.mjs",
+    "dev": "npx serve public"
+  },
+  "dependencies": {
+    "@octokit/graphql": "^7.0.0",
+    "dotenv": "^16.3.0"
+  }
+}

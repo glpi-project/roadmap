@@ -1,0 +1,49 @@
+name: Fetch Roadmap Data
+
+on:
+  # Run every 6 hours
+  schedule:
+    - cron: '0 */6 * * *'
+  # Allow manual trigger
+  workflow_dispatch:
+  # Run on push to main (for initial setup)
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/fetch-roadmap.mjs'
+      - '.github/workflows/fetch-roadmap.yml'
+
+jobs:
+  fetch-roadmap:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch roadmap data
+        env:
+          GITHUB_TOKEN: ${{ secrets.ROADMAP_TOKEN }}
+          PROJECT_URL: ${{ vars.PROJECT_URL || 'https://github.com/orgs/glpi-project/projects/25' }}
+        run: npm run fetch
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/roadmap-data.json
+          git diff --quiet --cached || git commit -m "chore: update roadmap data [skip ci]"
+          git push

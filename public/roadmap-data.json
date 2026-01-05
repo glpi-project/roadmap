@@ -1,0 +1,161 @@
+{
+  "generated_at": "2026-01-05T12:50:36.166Z",
+  "project": {
+    "title": "GLPI Public Roadmap",
+    "url": "https://github.com/orgs/glpi-project/projects/25"
+  },
+  "fields": [
+    {
+      "id": "PVTSSF_lADOAMviK84BHhOJzg4QDfE",
+      "name": "Status",
+      "options": [
+        {
+          "id": "f75ad846",
+          "name": "Todo",
+          "color": "GREEN"
+        },
+        {
+          "id": "47fc9ee4",
+          "name": "In Progress",
+          "color": "YELLOW"
+        },
+        {
+          "id": "98236657",
+          "name": "Partially released",
+          "color": "PURPLE"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "title": "12.0",
+      "issues": [
+        {
+          "id": "I_kwDOQROieM7ccgdo",
+          "title": "Workflow management",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/7",
+          "labels": [
+            {
+              "name": "Automation & Workflows",
+              "color": "04002b"
+            },
+            {
+              "name": "⭐ GLPI Network - Advanced",
+              "color": "0052cc"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Workflow management"
+            },
+            "Status": {
+              "value": "In Progress",
+              "optionId": "47fc9ee4"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7cccka",
+          "title": "Knowledge base overhaul",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/6",
+          "labels": [
+            {
+              "name": "Knowledge Base",
+              "color": "6bc609"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Knowledge base overhaul"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            },
+            "Specifications": {
+              "value": "https://outline.teclib.com/s/0d1c2aea-443d-472a-a349-ae978c3991af"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7fHfZS",
+          "title": "Multiple OLA",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/10",
+          "labels": [
+            {
+              "name": "ITSM / Helpdesk",
+              "color": "647cb5"
+            },
+            {
+              "name": "Automation & Workflows",
+              "color": "04002b"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Multiple OLA"
+            },
+            "Status": {
+              "value": "In Progress",
+              "optionId": "47fc9ee4"
+            },
+            "Specifications": {
+              "value": "https://outline.teclib.com/s/3520ef8f-22ab-44fb-8bb7-e4ace5f36969"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "13.0",
+      "issues": [
+        {
+          "id": "I_kwDOQROieM7baDoc",
+          "title": "Vulnerabilities management",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/2",
+          "labels": [
+            {
+              "name": "Security",
+              "color": "b01b23"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Vulnerabilities management"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7baESO",
+          "title": "Events management",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/3",
+          "labels": [
+            {
+              "name": "Security",
+              "color": "b01b23"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Events management"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
