@@ -82,7 +82,6 @@ export function populateLabelsDropdown() {
     const isSelected = state.filters.labels.includes(label.name);
     return `
       <button class="label-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}" data-label="${label.name}">
-        <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: #${label.color}"></span>
         <span class="truncate">${label.name}</span>
         ${isSelected ? '<svg class="w-4 h-4 ml-auto text-primary-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
       </button>
@@ -99,12 +98,16 @@ export function renderActiveFilters() {
   
   if (state.filters.text) {
     badges.push(`
-      <span class="filter-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200">
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <span class="filter-badge inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        "${state.filters.text}"
-        <button class="remove-filter hover:text-blue-600 dark:hover:text-blue-300" data-type="text">×</button>
+        <span class="opacity-70 font-normal">text:</span>${state.filters.text}
+        <button class="remove-filter ml-1 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" data-type="text">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </span>
     `);
   }
@@ -114,10 +117,14 @@ export function renderActiveFilters() {
     const colorKey = statusOpt?.color || 'GRAY';
     const colors = STATUS_COLOR_CLASSES[colorKey] || STATUS_COLOR_CLASSES.GRAY;
     badges.push(`
-      <span class="filter-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-800 ${colors.text}">
-        <span class="w-2 h-2 rounded-full ${colors.bg}"></span>
-        status:${state.filters.projectStatus}
-        <button class="remove-filter hover:opacity-70" data-type="projectStatus">×</button>
+      <span class="filter-badge inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-800 ${colors.text} border border-gray-200 dark:border-gray-700">
+        <span class="w-2.5 h-2.5 rounded-full ${colors.bg}"></span>
+        <span class="opacity-70 font-normal">status:</span>${state.filters.projectStatus}
+        <button class="remove-filter ml-1 hover:opacity-70 transition-opacity" data-type="projectStatus">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </span>
     `);
   }
@@ -127,9 +134,16 @@ export function renderActiveFilters() {
     const isLight = labelObj ? getLuminance(labelObj.color) > 0.5 : true;
     const bgColor = labelObj ? `#${labelObj.color}` : '#6b7280';
     badges.push(`
-      <span class="filter-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium ${isLight ? 'text-gray-800' : 'text-white'}" style="background-color: ${bgColor}">
-        label:${label}
-        <button class="remove-filter hover:opacity-70" data-type="label" data-value="${label}">×</button>
+      <span class="filter-badge inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium ${isLight ? 'text-gray-800' : 'text-white'}" style="background-color: ${bgColor}">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/>
+        </svg>
+        <span class="opacity-70 font-normal">label:</span>${label}
+        <button class="remove-filter ml-1 hover:opacity-70 transition-opacity" data-type="label" data-value="${label}">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </span>
     `);
   });
