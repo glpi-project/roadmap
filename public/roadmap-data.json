@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "generated_at": "2026-01-05T14:13:14.292Z",
-=======
-  "generated_at": "2026-01-05T14:24:30.633Z",
->>>>>>> b675ea6 (due date)
+  "generated_at": "2026-01-05T14:29:50.535Z",
   "project": {
     "title": "GLPI Public Roadmap",
     "url": "https://github.com/orgs/glpi-project/projects/25"
