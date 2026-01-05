@@ -42,16 +42,16 @@ export function renderCard(issue) {
 
   return `
     <div class="issue-card bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-      <div class="flex items-start justify-between gap-2 mb-2">
+      <div class="flex items-start gap-2 mb-2">
+        ${projectStatus ? `
+          <span class="status-dot flex-shrink-0 w-3 h-3 rounded-full ${statusColors.dot} mt-1 cursor-pointer" 
+                title="${projectStatus}" 
+                aria-label="Status: ${projectStatus}" 
+                data-status="${projectStatus}"></span>
+        ` : ''}
         <a href="${issue.url}" target="_blank" rel="noopener" class="font-medium text-gray-900 dark:text-white text-sm leading-snug hover:text-primary-600 dark:hover:text-primary-400 flex-1">
           ${title}
         </a>
-        ${projectStatus ? `
-          <span class="status-badge flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium ${statusColors.bg} ${statusColors.text}" data-status="${projectStatus}">
-            <span class="w-2 h-2 rounded-full ${statusColors.dot}"></span>
-            ${projectStatus}
-          </span>
-        ` : ''}
       </div>
       ${labelsHtml ? `<div class="flex flex-wrap gap-1.5 mt-3">${labelsHtml}</div>` : ''}
     </div>

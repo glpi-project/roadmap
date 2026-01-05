@@ -18,11 +18,11 @@ export function renderColumn(milestone) {
   const topBorderColor = stringToHslColor(milestone.title);
 
   return `
-    <div class="kanban-column shadow-lg rounded-lg overflow-hidden">
-      <div class="column-header sticky top-0 bg-gray-100 dark:bg-gray-800 px-4 py-3" style="border-top: 4px solid ${topBorderColor}">
+    <div class="kanban-column overflow-hidden">
+      <div class="column-header sticky top-0 px-4 py-3" style="border-top: 4px solid ${topBorderColor}">
         <h2 class="font-semibold text-gray-900 dark:text-white text-lg">${milestone.title}</h2>
       </div>
-      <div class="bg-gray-100 dark:bg-gray-800 p-3 space-y-3 min-h-[200px]">
+      <div class="p-3 space-y-3 min-h-[200px]">
         ${issuesHtml}
       </div>
     </div>
