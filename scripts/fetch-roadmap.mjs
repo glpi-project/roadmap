@@ -161,7 +161,7 @@ async function fetchAllItems() {
     }
 
     const pageItems = project.items.nodes
-      .filter(node => node.content && node.content.milestone) // Only issues with milestones
+      .filter(node => node.content) // Include all issues (with or without milestones)
       .map(node => {
         // Extract custom field values
         const customFields = {};
@@ -187,7 +187,7 @@ async function fetchAllItems() {
           title: node.content.title,
           state: node.content.state,
           url: node.content.url,
-          milestone: node.content.milestone.title,
+          milestone: node.content.milestone?.title || null, // null for unplanned
           labels: node.content.labels.nodes.map(label => ({
             name: label.name,
             color: label.color,
@@ -207,9 +207,10 @@ async function fetchAllItems() {
 
 function groupByMilestone(items) {
   const milestoneMap = new Map();
+  const TO_BE_PLANNED = 'To be planned';
 
   for (const item of items) {
-    const milestone = item.milestone;
+    const milestone = item.milestone || TO_BE_PLANNED;
     if (!milestoneMap.has(milestone)) {
       milestoneMap.set(milestone, []);
     }
@@ -223,9 +224,13 @@ function groupByMilestone(items) {
     });
   }
 
-  // Convert to array and sort milestones alphabetically
+  // Convert to array, sort alphabetically, but keep "To be planned" at the end
   return Array.from(milestoneMap.entries())
-    .sort((a, b) => a[0].localeCompare(b[0]))
+    .sort((a, b) => {
+      if (a[0] === TO_BE_PLANNED) return 1;
+      if (b[0] === TO_BE_PLANNED) return -1;
+      return a[0].localeCompare(b[0]);
+    })
     .map(([title, issues]) => ({
       title,
       issues,

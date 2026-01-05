@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-05T12:50:36.166Z",
+  "generated_at": "2026-01-05T13:16:33.903Z",
   "project": {
     "title": "GLPI Public Roadmap",
     "url": "https://github.com/orgs/glpi-project/projects/25"
@@ -148,6 +148,95 @@
           "customFields": {
             "Title": {
               "value": "Events management"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "To be planned",
+      "issues": [
+        {
+          "id": "I_kwDOQROieM7bXACx",
+          "title": "Session manager",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/1",
+          "labels": [
+            {
+              "name": "Security",
+              "color": "b01b23"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Session manager"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7baQ6-",
+          "title": "Native custom fields",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/4",
+          "labels": [
+            {
+              "name": "Generic Assets",
+              "color": "5777e8"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Native custom fields"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7ccZCQ",
+          "title": "Native CSV import",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/5",
+          "labels": [
+            {
+              "name": "Integrations & APIs",
+              "color": "82790f"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Native CSV import"
+            },
+            "Status": {
+              "value": "Todo",
+              "optionId": "f75ad846"
+            }
+          }
+        },
+        {
+          "id": "I_kwDOQROieM7ccheZ",
+          "title": "Configuration / Policies management",
+          "state": "OPEN",
+          "url": "https://github.com/glpi-project/roadmap/issues/8",
+          "labels": [
+            {
+              "name": "CMDB",
+              "color": "6a2b15"
+            }
+          ],
+          "customFields": {
+            "Title": {
+              "value": "Configuration / Policies management"
             },
             "Status": {
               "value": "Todo",
