@@ -23,9 +23,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Fetch and update data
-  fetch-data:
+  # Build and Deploy
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,30 +47,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ROADMAP_TOKEN }}
           PROJECT_URL: ${{ vars.PROJECT_URL || 'https://github.com/orgs/glpi-project/projects/25' }}
         run: npm run fetch
-
-      - name: Commit and push if changed
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add public/roadmap-data.json
-          git diff --quiet --cached || git commit -m "chore: update roadmap data [skip ci]"
-          git push
-
-  # Deploy to GitHub Pages
-  deploy:
-    needs: fetch-data
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: main  # Get latest after fetch-data committed
-
-      - name: Pull latest changes
-        run: git pull origin main
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

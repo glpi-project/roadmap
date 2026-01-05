@@ -16,6 +16,9 @@ dist-ssr
 .env
 .env.local
 
+# Generated data
+public/roadmap-data.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
