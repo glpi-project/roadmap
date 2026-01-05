@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "generated_at": "2026-01-05T14:13:14.292Z",
+=======
+  "generated_at": "2026-01-05T14:24:30.633Z",
+>>>>>>> b675ea6 (due date)
   "project": {
     "title": "GLPI Public Roadmap",
     "url": "https://github.com/orgs/glpi-project/projects/25"
@@ -30,6 +34,7 @@
   "milestones": [
     {
       "title": "12.0",
+      "dueOn": "2026-10-14T00:00:00Z",
       "issues": [
         {
           "id": "I_kwDOQROieM7ccgdo",
@@ -112,6 +117,7 @@
     },
     {
       "title": "13.0",
+      "dueOn": "2027-10-12T00:00:00Z",
       "issues": [
         {
           "id": "I_kwDOQROieM7baDoc",
@@ -159,6 +165,7 @@
     },
     {
       "title": "To be planned",
+      "dueOn": null,
       "issues": [
         {
           "id": "I_kwDOQROieM7bXACx",

@@ -107,6 +107,7 @@ const QUERY = `
                 url
                 milestone {
                   title
+                  dueOn
                 }
                 labels(first: 10) {
                   nodes {
@@ -187,7 +188,10 @@ async function fetchAllItems() {
           title: node.content.title,
           state: node.content.state,
           url: node.content.url,
-          milestone: node.content.milestone?.title || null, // null for unplanned
+          milestone: node.content.milestone ? {
+            title: node.content.milestone.title,
+            dueOn: node.content.milestone.dueOn
+          } : null, // null for unplanned
           labels: node.content.labels.nodes.map(label => ({
             name: label.name,
             color: label.color,
@@ -210,11 +214,19 @@ function groupByMilestone(items) {
   const TO_BE_PLANNED = 'To be planned';
 
   for (const item of items) {
-    const milestone = item.milestone || TO_BE_PLANNED;
-    if (!milestoneMap.has(milestone)) {
-      milestoneMap.set(milestone, []);
+    const isUnplanned = !item.milestone;
+    const milestoneTitle = isUnplanned ? TO_BE_PLANNED : item.milestone.title;
+    const dueOn = isUnplanned ? null : item.milestone.dueOn;
+
+    if (!milestoneMap.has(milestoneTitle)) {
+      milestoneMap.set(milestoneTitle, {
+        title: milestoneTitle,
+        dueOn: dueOn,
+        issues: []
+      });
     }
-    milestoneMap.get(milestone).push({
+    
+    milestoneMap.get(milestoneTitle).issues.push({
       id: item.id,
       title: item.title,
       state: item.state,
@@ -225,16 +237,12 @@ function groupByMilestone(items) {
   }
 
   // Convert to array, sort alphabetically, but keep "To be planned" at the end
-  return Array.from(milestoneMap.entries())
+  return Array.from(milestoneMap.values())
     .sort((a, b) => {
-      if (a[0] === TO_BE_PLANNED) return 1;
-      if (b[0] === TO_BE_PLANNED) return -1;
-      return a[0].localeCompare(b[0]);
-    })
-    .map(([title, issues]) => ({
-      title,
-      issues,
-    }));
+      if (a.title === TO_BE_PLANNED) return 1;
+      if (b.title === TO_BE_PLANNED) return -1;
+      return a.title.localeCompare(b.title);
+    });
 }
 
 async function main() {

@@ -2,7 +2,7 @@
 
 import { renderCard } from './card.js';
 import { filterIssues } from '../utils/state.js';
-import { stringToHslColor } from '../utils/helpers.js';
+import { stringToHslColor, formatSimpleDate } from '../utils/helpers.js';
 
 /**
  * Render a milestone column with filtered issues
@@ -16,11 +16,15 @@ export function renderColumn(milestone) {
   
   const issuesHtml = filteredIssues.map(renderCard).join('');
   const topBorderColor = stringToHslColor(milestone.title);
+  const dueDate = milestone.dueOn ? formatSimpleDate(milestone.dueOn) : null;
 
   return `
     <div class="kanban-column overflow-hidden">
       <div class="column-header sticky top-0 px-4 py-3" style="border-top: 4px solid ${topBorderColor}">
-        <h2 class="font-semibold text-gray-900 dark:text-white text-lg">${milestone.title}</h2>
+        <h2 class="font-semibold text-gray-900 dark:text-white text-lg flex items-baseline gap-2">
+          ${milestone.title}
+          ${dueDate ? `<span class="text-xs font-normal text-gray-500 dark:text-gray-400">${dueDate}</span>` : ''}
+        </h2>
       </div>
       <div class="p-3 space-y-3 min-h-[200px]">
         ${issuesHtml}

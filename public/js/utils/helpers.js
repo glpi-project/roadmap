@@ -20,6 +20,7 @@ export function getLuminance(hex) {
  * @returns {string} Formatted date string
  */
 export function formatDate(isoString) {
+  if (!isoString) return '';
   const date = new Date(isoString);
   return date.toLocaleDateString('en-US', {
     month: 'short',
@@ -27,6 +28,21 @@ export function formatDate(isoString) {
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit'
+  });
+}
+
+/**
+ * Format ISO date string for simple display (e.g., Dec 31, 2025)
+ * @param {string} isoString - ISO date string
+ * @returns {string} Formatted date string
+ */
+export function formatSimpleDate(isoString) {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
   });
 }
 
