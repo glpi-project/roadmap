@@ -6,6 +6,7 @@ import { state } from './utils/state.js';
 import { initTheme, setupThemeToggle } from './components/theme.js';
 import { renderKanban } from './components/column.js';
 import { initSearch, populateLabelsDropdown, populateStatusDropdown, handleLabelClick, handleStatusClick } from './components/search.js';
+import { initI18n, switchLanguage, currentLang, t } from './utils/i18n.js';
 
 // DOM Elements
 const elements = {
@@ -26,7 +27,11 @@ const elements = {
   statusDropdown: document.getElementById('status-dropdown'),
   labelsDropdownBtn: document.getElementById('labels-dropdown-btn'),
   labelsDropdown: document.getElementById('labels-dropdown'),
-  resultsCount: document.getElementById('results-count')
+  resultsCount: document.getElementById('results-count'),
+  // Language switcher
+  langDropdownBtn: document.getElementById('lang-dropdown-btn'),
+  langDropdown: document.getElementById('lang-dropdown'),
+  currentLangText: document.getElementById('current-lang-text')
 };
 
 /**
@@ -57,12 +62,20 @@ function showKanban(data) {
   elements.kanban.classList.remove('hidden');
   elements.searchBar.classList.remove('hidden');
 
+  updateLastUpdated(data.generated_at);
 
 
-  if (data.generated_at) {
-    elements.lastUpdated.textContent = `Updated: ${formatDate(data.generated_at)}`;
+
+/**
+ * Update the last updated timestamp
+ * @param {string} date - ISO date string
+ */
+function updateLastUpdated(date) {
+  if (date) {
+    elements.lastUpdated.textContent = t('last_updated', { date: formatDate(date) });
     elements.lastUpdated.classList.remove('hidden');
   }
+}
 
   // Store data in state
   state.roadmapData = data;
@@ -89,6 +102,12 @@ function showKanban(data) {
   // Initial render
   renderBoard();
   
+  // Update last updated on language change
+  window.addEventListener('languageChanged', () => {
+    updateLastUpdated(state.roadmapData.generated_at);
+    renderBoard();
+  });
+
   // Setup click delegation on kanban
   elements.columns.addEventListener('click', (e) => {
     // Label click
@@ -120,11 +139,52 @@ async function loadRoadmap() {
 }
 
 /**
+ * Setup language switcher buttons
+ */
+function setupLanguageSwitcher() {
+  const updateActiveLang = (lang) => {
+    if (elements.currentLangText) {
+      elements.currentLangText.textContent = lang;
+    }
+    document.querySelectorAll('.lang-option').forEach(opt => {
+      const isSelected = opt.dataset.lang === lang;
+      opt.classList.toggle('bg-gray-100', isSelected);
+      opt.classList.toggle('dark:bg-gray-700', isSelected);
+    });
+  };
+
+  updateActiveLang(currentLang);
+
+  elements.langDropdownBtn.addEventListener('click', () => {
+    elements.langDropdown.classList.toggle('hidden');
+  });
+
+  elements.langDropdown.addEventListener('click', (e) => {
+    const option = e.target.closest('.lang-option');
+    if (option) {
+      const lang = option.dataset.lang;
+      switchLanguage(lang);
+      updateActiveLang(lang);
+      elements.langDropdown.classList.add('hidden');
+    }
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (!elements.langDropdownBtn.contains(e.target) && !elements.langDropdown.contains(e.target)) {
+      elements.langDropdown.classList.add('hidden');
+    }
+  });
+}
+
+/**
  * Initialize the application
  */
-function init() {
+async function init() {
   initTheme();
   setupThemeToggle(elements.themeToggle);
+  await initI18n();
+  setupLanguageSwitcher();
   loadRoadmap();
 }
 

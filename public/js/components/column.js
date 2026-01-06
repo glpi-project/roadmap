@@ -3,6 +3,7 @@
 import { renderCard } from './card.js';
 import { filterIssues } from '../utils/state.js';
 import { stringToHslColor, formatSimpleDate } from '../utils/helpers.js';
+import { t } from '../utils/i18n.js';
 
 /**
  * Render a milestone column with filtered issues
@@ -40,5 +41,5 @@ export function renderColumn(milestone) {
  */
 export function renderKanban(milestones) {
   const html = milestones.map(renderColumn).join('');
-  return html || '<div class="text-center py-10 text-gray-500 dark:text-gray-400">No issues match your filters</div>';
+  return html || `<div class="text-center py-10 text-gray-500 dark:text-gray-400">${t('no_results')}</div>`;
 }

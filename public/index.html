@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GLPI Roadmap</title>
-  <meta name="description" content="Public roadmap for GLPI - Track upcoming features and improvements">
+  <title data-i18n="title">GLPI Roadmap</title>
+  <meta name="description" content="Public roadmap for GLPI - Track upcoming features and improvements" data-i18n="description" data-i18n-target="content">
   
   <!-- Google Fonts - Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +45,27 @@
     <!-- Absolute Utility Bar -->
     <div class="absolute top-4 right-4 sm:top-6 sm:right-8 flex items-center gap-4 z-30">
       <span id="last-updated" class="text-xs text-white/80 hidden lg:block font-medium"></span>
+      
+      <!-- Language Switcher -->
+      <div class="relative mr-1">
+        <button id="lang-dropdown-btn" class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg" aria-label="Switch language">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.39 8.073 16.5 3 18.5M15.5 15.5L14 14" />
+          </svg>
+          <span id="current-lang-text" class="text-xs font-bold uppercase">EN</span>
+        </button>
+        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+          <button class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-between" data-lang="en">
+            <span>English</span>
+            <span class="text-xs opacity-50">EN</span>
+          </button>
+          <button class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-between" data-lang="fr">
+            <span>Français</span>
+            <span class="text-xs opacity-50">FR</span>
+          </button>
+        </div>
+      </div>
+
       <button id="theme-toggle" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg" aria-label="Toggle dark mode">
         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
           <path class="hidden dark:block" fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
@@ -62,25 +83,25 @@
           <div class="flex flex-col items-center lg:items-start mb-8 sm:mb-10">
             <h1 class="text-3xl sm:text-5xl font-extrabold flex flex-col sm:flex-row items-center gap-4">
               <img src="pics/logo-GLPI.png" alt="GLPI" class="h-16 sm:h-24 drop-shadow-2xl" aria-label="GLPI"> 
-              <span>Roadmap</span>
+              <span data-i18n="title">Roadmap</span>
             </h1>
           </div>
 
-          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight drop-shadow-md">
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight drop-shadow-md" data-i18n="hero_title">
             Building the Future of GLPI. Together.
           </h2>
-          <p class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm max-w-3xl mx-auto lg:mx-0">
+          <p class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm max-w-3xl mx-auto lg:mx-0" data-i18n="hero_description">
             Explore our community-driven roadmap—a guide to our development journey, with major updates delivered every year.
           </p>
           
           <div class="flex flex-wrap justify-center lg:justify-start">
             <p class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm">
-              Make your voice count and 
+              <span data-i18n="hero_cta_prefix">Make your voice count and</span>
               <a href="https://github.com/glpi-project/roadmap/discussions" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/10 text-[#00a5f3] dark:text-white font-bold rounded-xl hover:bg-white/90 dark:hover:bg-white/20 transition-all shadow-2xl hover:scale-105 group border border-transparent dark:border-white/20 ml-3">
                 <svg class="w-6 h-6 transition-transform group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.015 21.985a.5.5 0 00.62.62L7 20.662c1.47.851 3.179 1.338 5 1.338 5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.444 0-2.822-.375-4.04-1.04a.5.5 0 00-.503-.02l-3.32.96.96-3.32a.5.5 0 00-.02-.503C4.375 14.822 4 13.444 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8zm-2-9a1 1 0 112 0 1 1 0 01-2 0zm-3 0a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z"/>
                 </svg>
-                Join the Conversation
+                <span data-i18n="hero_cta_text">Join the Conversation</span>
               </a>
             </p>
           </div>
@@ -117,10 +138,12 @@
             class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 text-sm min-w-[120px]"
             placeholder="Filter features..."
             autocomplete="off"
+            data-i18n="search_placeholder"
+            data-i18n-target="placeholder"
           >
           
           <!-- Clear Button -->
-          <button id="clear-search" class="hidden p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="Clear search">
+          <button id="clear-search" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="Clear search">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -135,7 +158,7 @@
       
       <!-- Quick Filters -->
       <div class="flex items-center justify-center gap-3 mt-4 flex-wrap">
-        <span class="text-xs text-gray-500 dark:text-gray-400">Quick filters:</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400" data-i18n="quick_filters">Quick filters:</span>
         
         <!-- Status Dropdown (project custom field) -->
         <div class="relative">
@@ -143,7 +166,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="6" stroke-width="2"/>
             </svg>
-            Status
+            <span data-i18n="status">Status</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
@@ -159,7 +182,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/>
             </svg>
-            Labels
+            <span data-i18n="labels">Labels</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
@@ -179,7 +202,7 @@
   <div id="loading" class="flex items-center justify-center py-20">
     <div class="flex flex-col items-center gap-4">
       <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"></div>
-      <p class="text-gray-600 dark:text-gray-400">Loading roadmap...</p>
+      <p class="text-gray-600 dark:text-gray-400" data-i18n="loading">Loading roadmap...</p>
     </div>
   </div>
 
@@ -189,7 +212,7 @@
       <svg class="w-12 h-12 mx-auto text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
-      <h2 class="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">Failed to load roadmap</h2>
+      <h2 class="text-lg font-semibold text-red-800 dark:text-red-200 mb-2" data-i18n="error_title">Failed to load roadmap</h2>
       <p class="text-red-600 dark:text-red-400 text-sm" id="error-message"></p>
     </div>
   </div>

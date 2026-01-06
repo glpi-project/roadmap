@@ -22,7 +22,8 @@ export function getLuminance(hex) {
 export function formatDate(isoString) {
   if (!isoString) return '';
   const date = new Date(isoString);
-  return date.toLocaleDateString('en-US', {
+  const lang = localStorage.getItem('glpi_roadmap_lang') || 'en';
+  return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -39,7 +40,8 @@ export function formatDate(isoString) {
 export function formatSimpleDate(isoString) {
   if (!isoString) return '';
   const date = new Date(isoString);
-  return date.toLocaleDateString('en-US', {
+  const lang = localStorage.getItem('glpi_roadmap_lang') || 'en';
+  return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric'
