@@ -1,6 +1,6 @@
 // Issue card component
 
-import { getLuminance, highlightText, hexToRgb, hexToHsl, getPerceivedLightness, truncateText } from '../utils/helpers.js';
+import { getLuminance, highlightText, hexToRgb, hexToHsl, getPerceivedLightness, truncateText, escapeHtml } from '../utils/helpers.js';
 import { state } from '../utils/state.js';
 
 // Status color mapping based on GitHub Project colors
@@ -54,7 +54,7 @@ export function renderCard(issue) {
         </a>
       </div>
       ${issue.description ? `
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3">
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3" title="${escapeHtml(issue.description)}">
           ${truncateText(issue.description, 120)}
         </p>
       ` : ''}
