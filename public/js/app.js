@@ -73,7 +73,6 @@ function showKanban(data) {
 function updateLastUpdated(date) {
   if (date) {
     elements.lastUpdated.textContent = t('last_updated', { date: formatDate(date) });
-    elements.lastUpdated.classList.remove('hidden');
   }
 }
 
