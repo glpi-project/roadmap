@@ -1,5 +1,5 @@
 import { graphql } from '@octokit/graphql';
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync, appendFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -279,6 +279,30 @@ async function main() {
     if (error.errors) {
       console.error('GraphQL errors:', JSON.stringify(error.errors, null, 2));
     }
+
+    // Report error to GitHub Job Summary if running in GitHub Actions
+    if (process.env.GITHUB_STEP_SUMMARY) {
+      try {
+        const summary = `
+### ❌ Roadmap Fetching Failed
+
+**Error message:** \`${error.message}\`
+
+${error.errors ? `
+**GraphQL Errors:**
+\`\`\`json
+${JSON.stringify(error.errors, null, 2)}
+\`\`\`
+` : ''}
+
+**Time:** ${new Date().toISOString()}
+`;
+        appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
+      } catch (summaryError) {
+        console.error('Failed to write to GITHUB_STEP_SUMMARY:', summaryError.message);
+      }
+    }
+
     process.exit(1);
   }
 }
