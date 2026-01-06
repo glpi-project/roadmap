@@ -22,7 +22,12 @@ function getBrowserLang() {
   return DEFAULT_LANG;
 }
 
-export let currentLang = localStorage.getItem(STORAGE_KEY) || getBrowserLang();
+const params = new URLSearchParams(window.location.search);
+const urlLang = params.get('lang')?.toLowerCase();
+
+export let currentLang = (urlLang && SUPPORTED_LANGS.includes(urlLang))
+  ? urlLang
+  : (localStorage.getItem(STORAGE_KEY) || getBrowserLang());
 let translations = {};
 
 /**

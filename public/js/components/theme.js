@@ -4,6 +4,14 @@
  * Initialize theme based on saved preference or system preference
  */
 export function initTheme() {
+  const params = new URLSearchParams(window.location.search);
+  const urlTheme = params.get('theme');
+
+  if (urlTheme === 'dark' || urlTheme === 'light') {
+    document.documentElement.classList.toggle('dark', urlTheme === 'dark');
+    return;
+  }
+
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   

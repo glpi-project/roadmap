@@ -18,6 +18,8 @@ const elements = {
   lastUpdated: document.getElementById('last-updated'),
   themeToggle: document.getElementById('theme-toggle'),
   searchBar: document.getElementById('search-bar'),
+  header: document.querySelector('header'),
+  footer: document.querySelector('footer'),
   // Search elements
   searchInput: document.getElementById('search-input'),
   activeFilters: document.getElementById('active-filters'),
@@ -177,6 +179,23 @@ function setupLanguageSwitcher() {
 }
 
 /**
+ * Handle embed mode if embed=true is in the URL
+ */
+function handleEmbedMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('embed') === 'true') {
+    if (elements.header) elements.header.classList.add('hidden');
+    if (elements.footer) elements.footer.classList.add('hidden');
+    
+    // Also remove background decoration if embed mode is on for a cleaner look
+    const kanban = document.getElementById('kanban');
+    if (kanban) {
+      kanban.classList.add('embed-mode');
+    }
+  }
+}
+
+/**
  * Initialize the application
  */
 async function init() {
@@ -184,6 +203,7 @@ async function init() {
   setupThemeToggle(elements.themeToggle);
   await initI18n();
   setupLanguageSwitcher();
+  handleEmbedMode();
   loadRoadmap();
 }
 
