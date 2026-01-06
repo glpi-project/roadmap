@@ -115,6 +115,7 @@ const QUERY = `
                     color
                   }
                 }
+                body
               }
             }
           }
@@ -196,6 +197,7 @@ async function fetchAllItems() {
             name: label.name,
             color: label.color,
           })),
+          description: node.content.body,
           customFields,
         };
       });
@@ -232,6 +234,7 @@ function groupByMilestone(items) {
       state: item.state,
       url: item.url,
       labels: item.labels,
+      description: item.description,
       customFields: item.customFields,
     });
   }

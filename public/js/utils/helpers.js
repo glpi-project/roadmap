@@ -73,6 +73,17 @@ export function highlightText(text, query) {
 }
 
 /**
+ * Truncate text to a maximum length
+ * @param {string} text - Text to truncate
+ * @param {number} maxLength - Maximum length
+ * @returns {string} Truncated text
+ */
+export function truncateText(text, maxLength) {
+  if (!text || text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trim() + '...';
+}
+
+/**
  * Generate a consistent HSL color from a string
  * @param {string} str - Input string
  * @param {number} saturation - Saturation percentage (default 65)
