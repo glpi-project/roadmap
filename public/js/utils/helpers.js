@@ -23,7 +23,14 @@ export function formatDate(isoString) {
   if (!isoString) return '';
   const date = new Date(isoString);
   const lang = localStorage.getItem('glpi_roadmap_lang') || 'en';
-  return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+  const locale = {
+    'fr': 'fr-FR',
+    'es': 'es-ES',
+    'pt-br': 'pt-BR',
+    'en': 'en-US'
+  }[lang] || 'en-US';
+  
+  return date.toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -41,7 +48,14 @@ export function formatSimpleDate(isoString) {
   if (!isoString) return '';
   const date = new Date(isoString);
   const lang = localStorage.getItem('glpi_roadmap_lang') || 'en';
-  return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+  const locale = {
+    'fr': 'fr-FR',
+    'es': 'es-ES',
+    'pt-br': 'pt-BR',
+    'en': 'en-US'
+  }[lang] || 'en-US';
+
+  return date.toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric'

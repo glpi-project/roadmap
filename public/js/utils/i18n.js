@@ -3,10 +3,26 @@
  */
 
 const DEFAULT_LANG = 'en';
-const SUPPORTED_LANGS = ['en', 'fr'];
+const SUPPORTED_LANGS = ['en', 'fr', 'es', 'pt-br'];
 const STORAGE_KEY = 'glpi_roadmap_lang';
 
-export let currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+/**
+ * Get the most appropriate language based on browser settings
+ * @returns {string} Supported language code
+ */
+function getBrowserLang() {
+  const browserLang = navigator.language.toLowerCase();
+  // Check full match (e.g., pt-br)
+  if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
+  
+  // Check primary subtag (e.g., fr from fr-CH)
+  const primary = browserLang.split('-')[0];
+  if (SUPPORTED_LANGS.includes(primary)) return primary;
+  
+  return DEFAULT_LANG;
+}
+
+export let currentLang = localStorage.getItem(STORAGE_KEY) || getBrowserLang();
 let translations = {};
 
 /**

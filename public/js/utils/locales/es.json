@@ -1,0 +1,21 @@
+{
+  "title": "Hoja de ruta",
+  "description": "Hoja de ruta pública para GLPI - Seguimiento de próximas funciones y mejoras",
+  "hero_title": "Construyendo el futuro de GLPI. Juntos.",
+  "hero_description": "Explore nuestra hoja de ruta impulsada por la comunidad: una guía de nuestro viaje de desarrollo, con actualizaciones importantes entregadas cada año.",
+  "hero_cta_prefix": "Haga que su voz cuente y",
+  "hero_cta_text": "Únase a la conversación",
+  "search_placeholder": "Filtrar funciones...",
+  "quick_filters": "Filtros rápidos:",
+  "status": "Estado",
+  "labels": "Etiquetas",
+  "loading": "Cargando hoja de ruta...",
+  "error_title": "Error al cargar la hoja de ruta",
+  "updated": "Actualizado:",
+  "no_results": "No hay tickets que coincidan con sus filtros",
+  "last_updated": "Actualizado el: {date}",
+  "showing_results": "Mostrando {count} de {total} tickets",
+  "filter_text": "texto",
+  "filter_status": "estado",
+  "filter_label": "etiqueta"
+}

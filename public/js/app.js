@@ -143,7 +143,7 @@ async function loadRoadmap() {
 function setupLanguageSwitcher() {
   const updateActiveLang = (lang) => {
     if (elements.currentLangText) {
-      elements.currentLangText.textContent = lang;
+      elements.currentLangText.textContent = lang.split('-')[0].toUpperCase();
     }
     document.querySelectorAll('.lang-option').forEach(opt => {
       const isSelected = opt.dataset.lang === lang;
