@@ -1,0 +1,21 @@
+{
+  "title": "Feuille de route GLPI",
+  "description": "Feuille de route publique pour GLPI - Suivez les fonctionnalités et améliorations à venir",
+  "hero_title": "Construisons l'avenir de GLPI. Ensemble.",
+  "hero_description": "Explorez notre feuille de route communautaire — un guide de notre parcours de développement, avec des mises à jour majeures livrées chaque année.",
+  "hero_cta_prefix": "Faites entendre votre voix et",
+  "hero_cta_text": "Rejoignez la conversation",
+  "search_placeholder": "Filtrer les fonctionnalités...",
+  "quick_filters": "Filtres rapides :",
+  "status": "Statut",
+  "labels": "Labels",
+  "loading": "Chargement de la feuille de route...",
+  "error_title": "Échec du chargement de la feuille de route",
+  "updated": "Mis à jour :",
+  "no_results": "Aucun ticket ne correspond à vos filtres",
+  "last_updated": "Mis à jour le : {date}",
+  "showing_results": "Affichage de {count} sur {total} tickets",
+  "filter_text": "texte",
+  "filter_status": "statut",
+  "filter_label": "label"
+}
