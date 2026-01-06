@@ -15,7 +15,6 @@ const elements = {
   kanban: document.getElementById('kanban'),
   columns: document.getElementById('columns'),
   lastUpdated: document.getElementById('last-updated'),
-  projectLink: document.getElementById('project-link'),
   themeToggle: document.getElementById('theme-toggle'),
   searchBar: document.getElementById('search-bar'),
   // Search elements
@@ -58,12 +57,7 @@ function showKanban(data) {
   elements.kanban.classList.remove('hidden');
   elements.searchBar.classList.remove('hidden');
 
-  // Update header info
-  if (data.project) {
-    const link = elements.projectLink.querySelector('a');
-    link.href = data.project.url;
-    elements.projectLink.classList.remove('hidden');
-  }
+
 
   if (data.generated_at) {
     elements.lastUpdated.textContent = `Updated: ${formatDate(data.generated_at)}`;
