@@ -193,27 +193,21 @@ body {
     border-radius: 0.25rem;
     font-weight: 600;
     white-space: nowrap;
-
-    &.light-bg {
-        color: #1f2937;
-    }
-
-    &.dark-bg {
-        color: #f9fafb;
-    }
+    
+    /* Neutral background with colored border and text */
+    background-color: rgb(249 250 251);
+    border: 1px solid var(--label-color);
+    color: var(--label-color);
 
     .dark & {
+        background-color: rgb(31 41 55);
+        /* Lighten the color for better contrast in dark mode */
         --lightness-threshold: 0.6;
-        --background-alpha: 0.18;
-        --border-alpha: 0.4;
         --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
         --lighten-by: calc((var(--lightness-threshold) - var(--perceived-lightness)) * 100 * var(--lightness-switch));
-
-        background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha)) !important;
-        border: 1px solid hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+        
+        border-color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
         color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
-        font-weight: 600;
-        filter: none;
     }
 }
 
