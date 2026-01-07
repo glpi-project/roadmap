@@ -2,284 +2,323 @@
 
 /* CSS Custom Properties for branding */
 :root {
-  --kanban-column-width: 400px;
-  --card-border-radius: 0.5rem;
-  --transition-speed: 200ms;
+    --kanban-column-width: 400px;
+    --card-border-radius: 0.5rem;
+    --transition-speed: 200ms;
 }
 
 /* Base styles */
 body {
-  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
 /* Header & Hero Integration */
 .header-hero {
-  background-image: url('pics/Vector-5.png');
-  background-size: 400px auto;
-  background-position: left 45px;
-  background-repeat: no-repeat;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(180deg, rgba(0, 165, 243, 0.8) 0%, rgba(0, 165, 243, 0.4) 100%);
-    z-index: 0;
-
-    .dark & {
-      background: linear-gradient(180deg, rgba(3, 7, 18, 0.9) 0%, rgba(3, 7, 18, 0.7) 100%);
-    }
-  }
-
-  & > div:not(.absolute) {
+    background-image: url('pics/Vector-5.png');
+    background-size: 400px auto;
+    background-position: left 45px;
+    background-repeat: no-repeat;
     position: relative;
-    z-index: 1;
-  }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(0, 165, 243, 0.8) 0%, rgba(0, 165, 243, 0.4) 100%);
+        z-index: 0;
+
+        .dark & {
+            background: linear-gradient(180deg, rgba(3, 7, 18, 0.9) 0%, rgba(3, 7, 18, 0.7) 100%);
+        }
+    }
+
+    &>div:not(.absolute) {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 /* Search bar styles */
 #search-bar {
-  & #search-suggestions,
-  & #status-dropdown,
-  & #labels-dropdown {
-    animation: dropdownSlide 0.15s ease-out;
-  }
 
-  & #search-suggestions {
-    & .suggestion-item {
-      transition: background-color var(--transition-speed) ease;
-
-      &:first-child {
-        border-radius: 0.5rem 0.5rem 0 0;
-      }
-
-      &:last-child {
-        border-radius: 0 0 0.5rem 0.5rem;
-      }
+    & #search-suggestions,
+    & #status-dropdown,
+    & #labels-dropdown {
+        animation: dropdownSlide 0.15s ease-out;
     }
-  }
+
+    & #search-suggestions {
+        & .suggestion-item {
+            transition: background-color var(--transition-speed) ease;
+
+            &:first-child {
+                border-radius: 0.5rem 0.5rem 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 0.5rem 0.5rem;
+            }
+        }
+    }
 }
 
 /* Kanban Board & Components */
 #kanban {
-  position: relative;
-  overflow: hidden;
-
-  &.embed-mode::after {
-    display: none;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -130px;
-    right: -40px;
-    width: 650px;
-    height: 650px;
-    background-image: url('pics/brush.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  & #columns {
-    justify-content: center;
     position: relative;
-    z-index: 1;
-  }
+    overflow: hidden;
 
-  & .kanban-container {
-    scroll-behavior: smooth;
-
-    &::-webkit-scrollbar {
-      height: 8px;
+    &.embed-mode::after {
+        display: none;
     }
 
-    &::-webkit-scrollbar-track {
-      background: transparent;
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -130px;
+        right: -40px;
+        width: 650px;
+        height: 650px;
+        background-image: url('pics/brush.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        pointer-events: none;
+        z-index: 0;
     }
 
-    &::-webkit-scrollbar-thumb {
-      background: rgb(156 163 175 / 0.5);
-      border-radius: 4px;
+    & #columns {
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
 
-      &:hover {
-        background: rgb(156 163 175 / 0.7);
-      }
+    & .kanban-container {
+        scroll-behavior: smooth;
 
-      .dark & {
-        background: rgb(107 114 128 / 0.5);
+        &::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgb(156 163 175 / 0.5);
+            border-radius: 4px;
+
+            &:hover {
+                background: rgb(156 163 175 / 0.7);
+            }
+
+            .dark & {
+                background: rgb(107 114 128 / 0.5);
+
+                &:hover {
+                    background: rgb(107 114 128 / 0.7);
+                }
+            }
+        }
+    }
+
+    & .kanban-column {
+        width: var(--kanban-column-width);
+        flex-shrink: 0;
+
+        & .column-header {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+    }
+
+    & .issue-card {
+        transition: transform var(--transition-speed) ease,
+            box-shadow var(--transition-speed) ease;
+        animation: cardFadeIn 0.3s ease-out forwards;
 
         &:hover {
-          background: rgb(107 114 128 / 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
         }
-      }
+
+        & a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-color: currentColor;
+                text-underline-offset: 2px;
+            }
+        }
+
+        & .label-pill {
+            cursor: pointer;
+        }
+
+        &:nth-child(1) {
+            animation-delay: 0ms;
+        }
+
+        &:nth-child(2) {
+            animation-delay: 50ms;
+        }
+
+        &:nth-child(3) {
+            animation-delay: 100ms;
+        }
+
+        &:nth-child(4) {
+            animation-delay: 150ms;
+        }
+
+        &:nth-child(5) {
+            animation-delay: 200ms;
+        }
+
+        &:nth-child(n+6) {
+            animation-delay: 250ms;
+        }
     }
-  }
-
-  & .kanban-column {
-    width: var(--kanban-column-width);
-    flex-shrink: 0;
-
-    & .column-header {
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-  }
-
-  & .issue-card {
-    transition: transform var(--transition-speed) ease,
-                box-shadow var(--transition-speed) ease;
-    animation: cardFadeIn 0.3s ease-out forwards;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-    }
-
-    & a {
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-        text-decoration-color: currentColor;
-        text-underline-offset: 2px;
-      }
-    }
-
-    & .label-pill {
-      cursor: pointer;
-      transition: transform var(--transition-speed) ease,
-                  box-shadow var(--transition-speed) ease;
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 2px 4px rgb(0 0 0 / 0.15);
-      }
-    }
-
-    &:nth-child(1) { animation-delay: 0ms; }
-    &:nth-child(2) { animation-delay: 50ms; }
-    &:nth-child(3) { animation-delay: 100ms; }
-    &:nth-child(4) { animation-delay: 150ms; }
-    &:nth-child(5) { animation-delay: 200ms; }
-    &:nth-child(n+6) { animation-delay: 250ms; }
-  }
 }
 
 /* Shared Components & Utilities */
 
 /* Label pills */
 .label-pill {
-  font-size: 0.8rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
-  white-space: nowrap;
-
-  &.light-bg {
-    color: #1f2937;
-  }
-
-  &.dark-bg {
-    color: #f9fafb;
-  }
-
-  .dark & {
-    --lightness-threshold: 0.6;
-    --background-alpha: 0.18;
-    --border-alpha: 0.4;
-    --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
-    --lighten-by: calc((var(--lightness-threshold) - var(--perceived-lightness)) * 100 * var(--lightness-switch));
-
-    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha)) !important;
-    border: 1px solid hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    font-size: 0.8rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
     font-weight: 600;
-    filter: none;
-  }
+    white-space: nowrap;
+
+    &.light-bg {
+        color: #1f2937;
+    }
+
+    &.dark-bg {
+        color: #f9fafb;
+    }
+
+    .dark & {
+        --lightness-threshold: 0.6;
+        --background-alpha: 0.18;
+        --border-alpha: 0.4;
+        --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
+        --lighten-by: calc((var(--lightness-threshold) - var(--perceived-lightness)) * 100 * var(--lightness-switch));
+
+        background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha)) !important;
+        border: 1px solid hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+        color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+        font-weight: 600;
+        filter: none;
+    }
 }
 
 /* State badges */
 .state-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
 
-  &.open {
-    background-color: rgb(34 197 94 / 0.15);
-    color: #16a34a;
+    &.open {
+        background-color: rgb(34 197 94 / 0.15);
+        color: #16a34a;
 
-    .dark & {
-      background-color: rgb(34 197 94 / 0.2);
-      color: #4ade80;
+        .dark & {
+            background-color: rgb(34 197 94 / 0.2);
+            color: #4ade80;
+        }
     }
-  }
 
-  &.closed {
-    background-color: rgb(139 92 246 / 0.15);
-    color: #7c3aed;
+    &.closed {
+        background-color: rgb(139 92 246 / 0.15);
+        color: #7c3aed;
 
-    .dark & {
-      background-color: rgb(139 92 246 / 0.2);
-      color: #a78bfa;
+        .dark & {
+            background-color: rgb(139 92 246 / 0.2);
+            color: #a78bfa;
+        }
     }
-  }
 }
+
 
 /* Filters & Marks */
-.filter-badge {
-  animation: badgeFadeIn 0.2s ease-out;
-}
 
 mark {
-  animation: highlightPulse 0.3s ease-out;
+    animation: highlightPulse 0.3s ease-out;
 
-  .dark & {
-    animation: highlightPulseDark 0.3s ease-out;
-  }
+    .dark & {
+        animation: highlightPulseDark 0.3s ease-out;
+    }
 }
 
 /* Media Queries */
 @media (max-width: 640px) {
-  :root {
-    --kanban-column-width: 320px;
-  }
+    :root {
+        --kanban-column-width: 320px;
+    }
 }
 
 /* Animations */
 @keyframes cardFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes badgeFadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @keyframes highlightPulse {
-  0% { background-color: rgb(253 224 71 / 0.8); }
-  100% { background-color: rgb(253 224 71 / 0.4); }
+    0% {
+        background-color: rgb(253 224 71 / 0.8);
+    }
+
+    100% {
+        background-color: rgb(253 224 71 / 0.4);
+    }
 }
 
 @keyframes highlightPulseDark {
-  0% { background-color: rgb(161 98 7 / 0.8); }
-  100% { background-color: rgb(161 98 7 / 0.5); }
+    0% {
+        background-color: rgb(161 98 7 / 0.8);
+    }
+
+    100% {
+        background-color: rgb(161 98 7 / 0.5);
+    }
 }
 
 @keyframes dropdownSlide {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
 
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
