@@ -39,10 +39,27 @@ body {
         position: relative;
         z-index: 1;
     }
+
+    /* Align hero content with kanban columns */
+    & .max-w-7xl {
+        max-width: calc(var(--kanban-column-width) * 3 + .8rem * 2);
+        
+        @media (max-width: 1024px) {
+            max-width: 100%;
+        }
+    }
 }
 
 /* Search bar styles */
 #search-bar {
+    /* Make inner container match 3 kanban columns width on desktop */
+    & > div {
+        max-width: calc(var(--kanban-column-width) * 3 + .8rem * 2);
+        
+        @media (max-width: 1024px) {
+            max-width: 100%;
+        }
+    }
 
     & #search-suggestions,
     & #status-dropdown,
