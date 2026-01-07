@@ -138,6 +138,7 @@ body {
         transition: transform var(--transition-speed) ease,
             box-shadow var(--transition-speed) ease;
         animation: cardFadeIn 0.3s ease-out forwards;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.03);
 
         &:hover {
             transform: translateY(-2px);
@@ -191,7 +192,6 @@ body {
     font-size: 0.8rem;
     padding: 0.125rem 0.5rem;
     border-radius: 0.25rem;
-    font-weight: 600;
     white-space: nowrap;
     
     /* Neutral background with colored border and text */
