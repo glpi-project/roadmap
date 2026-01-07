@@ -81,6 +81,6 @@ function renderLabels(labels) {
     // CSS variables for dark mode calculations
     const cssVars = `--label-r:${r}; --label-g:${g}; --label-b:${b}; --label-h:${h}; --label-s:${s}; --label-l:${l}; --perceived-lightness:${perceivedLightness.toFixed(3)}`;
     
-    return `<span class="label-pill ${isActive ? 'ring-2 ring-primary-500' : ''}" style="--label-color: #${label.color}; ${cssVars}" data-label="${label.name}">${label.name}</span>`;
+    return `<span class="label-pill" style="--label-color: #${label.color}; ${cssVars}" data-label="${label.name}">${label.name}</span>`;
   }).join('');
 }

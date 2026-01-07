@@ -1,6 +1,6 @@
 // Search bar component
 
-import { getLuminance } from '../utils/helpers.js';
+import { getLuminance, hexToHsl, getPerceivedLightness } from '../utils/helpers.js';
 import { 
   state, 
   hasActiveFilters, 
@@ -132,14 +132,24 @@ export function renderActiveFilters() {
   
   state.filters.labels.forEach(label => {
     const labelObj = state.allLabels.find(l => l.name === label);
-    const isLight = labelObj ? getLuminance(labelObj.color) > 0.5 : true;
-    const bgColor = labelObj ? `#${labelObj.color}` : '#6b7280';
+    const labelColor = labelObj ? `#${labelObj.color}` : '#6b7280';
+    
+    // Get color components for dark mode calculations
+    let cssVars = '';
+    if (labelObj) {
+      const { h, s, l } = hexToHsl(labelObj.color);
+      const perceivedLightness = getPerceivedLightness(labelObj.color);
+      cssVars = `--label-color: ${labelColor}; --label-h:${h}; --label-s:${s}; --label-l:${l}; --perceived-lightness:${perceivedLightness.toFixed(3)}`;
+    } else {
+      cssVars = `--label-color: ${labelColor}`;
+    }
+    
     badges.push(`
-      <span class="filter-badge inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium ${isLight ? 'text-gray-800' : 'text-white'}" style="background-color: ${bgColor}">
+      <span class="filter-badge label-pill inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs" style="${cssVars}">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/>
         </svg>
-        <span class="opacity-70 font-normal">${t('filter_label')}:</span>${label}
+        <span class="opacity-70 font-normal text-gray-600 dark:text-gray-400">${t('filter_label')}:</span><span class="font-semibold">${label}</span>
         <button class="remove-filter ml-1 hover:opacity-70 transition-opacity" data-type="label" data-value="${label}">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
