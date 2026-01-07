@@ -2,7 +2,7 @@
 
 /* CSS Custom Properties for branding */
 :root {
-  --kanban-column-width: 320px;
+  --kanban-column-width: 400px;
   --card-border-radius: 0.5rem;
   --transition-speed: 200ms;
 }
@@ -253,7 +253,7 @@ mark {
 /* Media Queries */
 @media (max-width: 640px) {
   :root {
-    --kanban-column-width: 280px;
+    --kanban-column-width: 320px;
   }
 }
 
