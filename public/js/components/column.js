@@ -16,13 +16,12 @@ export function renderColumn(milestone) {
   if (filteredIssues.length === 0) return '';
   
   const issuesHtml = filteredIssues.map(renderCard).join('');
-  const topBorderColor = stringToHslColor(milestone.title);
   const dueDate = milestone.dueOn ? formatSimpleDate(milestone.dueOn) : null;
 
   return `
     <div class="kanban-column overflow-hidden">
-      <div class="column-header sticky top-0 px-4 py-3" style="border-top: 4px solid ${topBorderColor}">
-        <h2 class="font-semibold text-gray-900 dark:text-white text-lg flex items-center justify-between gap-2">
+      <div class="column-header sticky top-0 px-4 py-3">
+        <h2 class="font-semibold text-gray-900 dark:text-white text-xl flex items-center justify-between gap-2">
           <span>${milestone.title}</span>
           ${dueDate ? `<span class="text-xs font-normal text-gray-500 dark:text-gray-400">${dueDate}</span>` : ''}
         </h2>
