@@ -146,8 +146,20 @@ body {
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
+        background-color: rgb(240, 249, 253);
+        border-radius: 1rem;
+        transition: background-color 0.3s ease;
+
+        .dark & {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        &.last-column {
+            background-color: transparent;
+        }
 
         & .column-header {
+            background-color: transparent;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             flex-shrink: 0;
@@ -160,6 +172,34 @@ body {
 
             .dark & {
                 color: #f1f5f9; /* Adjusted for dark mode readability */
+            }
+        }
+
+        &.column-0 .column-header {
+            background-color: rgb(255, 224, 46);
+            /* Reset backdrop filter to avoid strange blending with solid color */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+
+            & .milestone-title,
+            & .milestone-description {
+                color: #1e2b62; /* Maintain contrast on blue background */
+            }
+        }
+
+        &.column-1 .column-header {
+            background-color: #40b0e5;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+
+            & .milestone-title,
+            & .milestone-description {
+                color: #FFF; /* Maintain contrast on blue background */
+            }
+
+            .dark & .milestone-title,
+            .dark & .milestone-description {
+                color: #0f172a; /* Darker for dark mode blue splash */
             }
         }
 
@@ -180,6 +220,7 @@ body {
             overflow: hidden;
             line-height: 1.25rem;
             height: 1.25rem; /* Reserve space for exactly 1 line */
+            font-style: italic;
         }
     }
 

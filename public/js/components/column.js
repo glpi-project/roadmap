@@ -9,9 +9,11 @@ import { t } from '../utils/i18n.js';
  * Render a milestone column with filtered issues
  * @param {Object} milestone - Milestone object
  * @param {boolean} hasAnyDescription - Whether any milestone in the board has a description
+ * @param {number} index - Column index for specific styling
+ * @param {boolean} isLast - Whether this is the last visible column
  * @returns {string} HTML string (empty if no issues match filters)
  */
-export function renderColumn(milestone, hasAnyDescription = false) {
+export function renderColumn(milestone, hasAnyDescription = false, index = -1, isLast = false) {
   const filteredIssues = filterIssues(milestone.issues);
   const sortedIssues = sortIssuesByStatus(filteredIssues);
   
@@ -21,14 +23,14 @@ export function renderColumn(milestone, hasAnyDescription = false) {
   const dueDate = milestone.dueOn ? formatSimpleDate(milestone.dueOn) : null;
 
   return `
-    <div class="kanban-column overflow-hidden">
-      <div class="column-header sticky top-0 px-4 py-3">
-        <h2 class="milestone-title flex items-center justify-between gap-2">
+    <div class="kanban-column overflow-hidden ${index >= 0 ? `column-${index}` : ''} ${isLast ? 'last-column' : ''}">
+      <div class="column-header sticky top-0 px-4 py-6 flex flex-col items-center">
+        <h2 class="milestone-title flex flex-col items-center gap-1">
           <span>${milestone.title}</span>
           ${dueDate ? `<span class="text-xs font-normal text-gray-500 dark:text-gray-400">${dueDate}</span>` : ''}
         </h2>
         ${milestone.description ? 
-          `<p class="mt-1 text-sm text-gray-600 dark:text-gray-400 milestone-description line-clamp-1" title="${milestone.description.replace(/"/g, '&quot;')}">${milestone.description}</p>` : 
+          `<p class="mt-1 text-sm text-gray-600 dark:text-gray-400 milestone-description line-clamp-1 text-center" title="${milestone.description.replace(/"/g, '&quot;')}">${milestone.description}</p>` : 
           (hasAnyDescription ? '<div class="mt-1 text-sm milestone-description-placeholder opacity-0 select-none">&nbsp;</div>' : '')
         }
       </div>
@@ -51,6 +53,13 @@ export function renderKanban(milestones) {
     return filtered.length > 0 && m.description;
   });
 
-  const html = milestones.map(m => renderColumn(m, hasAnyDescription)).join('');
+  // Filter out empty columns first if needed, but here we just render them all and rely on renderColumn to return empty string
+  // To keep consistent indices for visible columns, we should filter milestones first
+  const visibleMilestones = milestones.filter(m => filterIssues(m.issues).length > 0);
+
+  const html = visibleMilestones.map((m, index) => {
+    const isLast = index === visibleMilestones.length - 1;
+    return renderColumn(m, hasAnyDescription, index, isLast);
+  }).join('');
   return html || `<div class="text-center py-10 text-gray-500 dark:text-gray-400">${t('no_results')}</div>`;
 }
