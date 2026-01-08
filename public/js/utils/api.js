@@ -1,6 +1,6 @@
 // API utilities for fetching data
 
-const DATA_URL = '../../roadmap-data.json';
+const DATA_URL = 'roadmap-data.json';
 
 /**
  * Fetch roadmap data from JSON file
