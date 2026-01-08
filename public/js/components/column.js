@@ -1,7 +1,7 @@
 // Kanban column component
 
 import { renderCard } from './card.js';
-import { filterIssues } from '../utils/state.js';
+import { filterIssues, sortIssuesByStatus } from '../utils/state.js';
 import { stringToHslColor, formatSimpleDate } from '../utils/helpers.js';
 import { t } from '../utils/i18n.js';
 
@@ -12,10 +12,11 @@ import { t } from '../utils/i18n.js';
  */
 export function renderColumn(milestone) {
   const filteredIssues = filterIssues(milestone.issues);
+  const sortedIssues = sortIssuesByStatus(filteredIssues);
   
-  if (filteredIssues.length === 0) return '';
+  if (sortedIssues.length === 0) return '';
   
-  const issuesHtml = filteredIssues.map(renderCard).join('');
+  const issuesHtml = sortedIssues.map(renderCard).join('');
   const dueDate = milestone.dueOn ? formatSimpleDate(milestone.dueOn) : null;
 
   return `

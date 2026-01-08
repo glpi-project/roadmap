@@ -93,6 +93,32 @@ export function getStatusOptions() {
 }
 
 /**
+ * Sort issues by their Project Status custom field based on the defined options order
+ * @param {Array} issues - Array of issues to sort
+ * @returns {Array} Sorted issues
+ */
+export function sortIssuesByStatus(issues) {
+  const statusOptions = getStatusOptions();
+  if (statusOptions.length === 0) return issues;
+  
+  // Create a map of status name to its index for fast lookup
+  const statusOrder = new Map();
+  statusOptions.forEach((opt, index) => {
+    statusOrder.set(opt.name, index);
+  });
+  
+  return [...issues].sort((a, b) => {
+    const statusA = a.customFields?.Status?.value;
+    const statusB = b.customFields?.Status?.value;
+    
+    const indexA = statusOrder.has(statusA) ? statusOrder.get(statusA) : statusOptions.length;
+    const indexB = statusOrder.has(statusB) ? statusOrder.get(statusB) : statusOptions.length;
+    
+    return indexA - indexB;
+  });
+}
+
+/**
  * Filter issues based on active filters
  * @param {Array} issues - Array of issues to filter
  * @returns {Array} Filtered issues
