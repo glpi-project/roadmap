@@ -152,6 +152,24 @@ body {
             -webkit-backdrop-filter: blur(8px);
             flex-shrink: 0;
         }
+
+        & .milestone-title {
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 700;
+            color: #1e2b62;
+
+            .dark & {
+                color: #f1f5f9; /* Adjusted for dark mode readability */
+            }
+        }
+
+        & .card-title {
+            color: #1e2b62;
+
+            .dark & {
+                color: #f1f5f9; /* Adjusted for dark mode readability */
+            }
+        }
         
         & .milestone-description,
         & .milestone-description-placeholder {

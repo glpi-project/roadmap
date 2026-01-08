@@ -49,7 +49,7 @@ export function renderCard(issue) {
                 aria-label="Status: ${projectStatus}" 
                 data-status="${projectStatus}"></span>
         ` : ''}
-        <a href="${issue.url}" target="_blank" rel="noopener" class="font-medium text-gray-900 dark:text-white text-sm leading-snug hover:text-primary-600 dark:hover:text-primary-400 flex-1">
+        <a href="${issue.url}" target="_blank" rel="noopener" class="card-title font-medium text-gray-900 dark:text-white text-sm leading-snug hover:text-primary-600 dark:hover:text-primary-400 flex-1">
           ${title}
         </a>
       </div>

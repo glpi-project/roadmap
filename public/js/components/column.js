@@ -23,7 +23,7 @@ export function renderColumn(milestone, hasAnyDescription = false) {
   return `
     <div class="kanban-column overflow-hidden">
       <div class="column-header sticky top-0 px-4 py-3">
-        <h2 class="font-semibold text-gray-900 dark:text-white text-3xl flex items-center justify-between gap-2">
+        <h2 class="milestone-title flex items-center justify-between gap-2">
           <span>${milestone.title}</span>
           ${dueDate ? `<span class="text-xs font-normal text-gray-500 dark:text-gray-400">${dueDate}</span>` : ''}
         </h2>
