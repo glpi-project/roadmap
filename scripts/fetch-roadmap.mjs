@@ -107,6 +107,7 @@ const QUERY = `
                 url
                 milestone {
                   title
+                  description
                   dueOn
                 }
                 labels(first: 10) {
@@ -191,6 +192,7 @@ async function fetchAllItems() {
           url: node.content.url,
           milestone: node.content.milestone ? {
             title: node.content.milestone.title,
+            description: node.content.milestone.description,
             dueOn: node.content.milestone.dueOn
           } : null, // null for unplanned
           labels: node.content.labels.nodes.map(label => ({
@@ -219,10 +221,12 @@ function groupByMilestone(items) {
     const isUnplanned = !item.milestone;
     const milestoneTitle = isUnplanned ? TO_BE_PLANNED : item.milestone.title;
     const dueOn = isUnplanned ? null : item.milestone.dueOn;
+    const description = isUnplanned ? null : item.milestone.description;
 
     if (!milestoneMap.has(milestoneTitle)) {
       milestoneMap.set(milestoneTitle, {
         title: milestoneTitle,
+        description: description,
         dueOn: dueOn,
         issues: []
       });

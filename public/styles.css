@@ -144,10 +144,24 @@ body {
     & .kanban-column {
         width: var(--kanban-column-width);
         flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
 
         & .column-header {
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            flex-shrink: 0;
+        }
+        
+        & .milestone-description,
+        & .milestone-description-placeholder {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.25rem;
+            height: 1.25rem; /* Reserve space for exactly 1 line */
         }
     }
 
