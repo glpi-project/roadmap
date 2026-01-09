@@ -109,6 +109,7 @@ const QUERY = `
                   title
                   description
                   dueOn
+                  state
                 }
                 labels(first: 10) {
                   nodes {
@@ -165,6 +166,7 @@ async function fetchAllItems() {
 
     const pageItems = project.items.nodes
       .filter(node => node.content) // Include all issues (with or without milestones)
+      .filter(node => !node.content.milestone || node.content.milestone.state === 'OPEN') // Exclude closed milestones
       .map(node => {
         // Extract custom field values
         const customFields = {};
