@@ -42,7 +42,7 @@ body {
 
     /* Align hero content with kanban columns */
     & .max-w-7xl {
-        max-width: calc(var(--kanban-column-width) * 3 + .8rem * 2);
+        max-width: calc(var(--kanban-column-width) * 3 + 1.5rem * 2);
         
         @media (max-width: 1024px) {
             max-width: 100%;
@@ -54,7 +54,7 @@ body {
 #search-bar {
     /* Make inner container match 3 kanban columns width on desktop */
     & > div {
-        max-width: calc(var(--kanban-column-width) * 3 + .8rem * 2);
+        max-width: calc(var(--kanban-column-width) * 3 + 1.5rem * 2);
         
         @media (max-width: 1024px) {
             max-width: 100%;
@@ -224,7 +224,6 @@ body {
         transition: transform var(--transition-speed) ease,
             box-shadow var(--transition-speed) ease;
         animation: cardFadeIn 0.3s ease-out forwards;
-        box-shadow: 0 1px 3px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.03);
 
         &:hover {
             transform: translateY(-2px);

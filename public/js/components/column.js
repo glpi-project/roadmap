@@ -34,7 +34,7 @@ export function renderColumn(milestone, hasAnyDescription = false, index = -1, i
           (hasAnyDescription ? '<div class="mt-1 text-sm milestone-description-placeholder opacity-0 select-none">&nbsp;</div>' : '')
         }
       </div>
-      <div class="p-3 space-y-3 min-h-[200px]">
+      <div class="p-3 space-y-3 mt-3 min-h-[200px]">
         ${issuesHtml}
       </div>
     </div>

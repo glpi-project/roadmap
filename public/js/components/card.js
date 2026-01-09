@@ -69,7 +69,7 @@ export function renderCard(issue) {
   const statusColors = getStatusColors(projectStatus);
 
   return `
-    <div class="issue-card bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+    <div class="issue-card bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
       <div class="flex items-start gap-2 mb-2">
         ${projectStatus ? `
           <span class="status-dot flex-shrink-0 w-3 h-3 rounded-full ${statusColors.dot} mt-1 cursor-pointer" 

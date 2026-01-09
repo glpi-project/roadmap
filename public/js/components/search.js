@@ -49,6 +49,8 @@ export function initSearch(els, onChange) {
  * Populate the status dropdown with project status options
  */
 export function populateStatusDropdown() {
+  if (!elements.statusDropdown) return;
+  
   const options = getStatusOptions();
   
   if (options.length === 0) {
@@ -78,6 +80,8 @@ export function populateStatusDropdown() {
  * Populate the labels dropdown with available labels
  */
 export function populateLabelsDropdown() {
+  if (!elements.labelsDropdown) return;
+  
   elements.labelsDropdown.innerHTML = state.allLabels.map(label => {
     const isLight = getLuminance(label.color) > 0.5;
     const isSelected = state.filters.labels.includes(label.name);
@@ -330,52 +334,56 @@ function setupEventListeners() {
     applyFilters();
   });
   
-  // Status dropdown
-  elements.statusDropdownBtn.addEventListener('click', () => {
-    elements.statusDropdown.classList.toggle('hidden');
-    elements.labelsDropdown.classList.add('hidden');
-  });
-  
-  // Status dropdown click (event delegation for dynamic content)
-  elements.statusDropdown.addEventListener('click', (e) => {
-    const option = e.target.closest('.status-option');
-    if (option) {
-      const status = option.dataset.status;
-      if (state.filters.projectStatus === status) {
-        setProjectStatusFilter(null); // Toggle off if already selected
-      } else {
-        setProjectStatusFilter(status);
+  // Status dropdown (only if elements exist)
+  if (elements.statusDropdownBtn && elements.statusDropdown) {
+    elements.statusDropdownBtn.addEventListener('click', () => {
+      elements.statusDropdown.classList.toggle('hidden');
+      elements.labelsDropdown?.classList.add('hidden');
+    });
+    
+    // Status dropdown click (event delegation for dynamic content)
+    elements.statusDropdown.addEventListener('click', (e) => {
+      const option = e.target.closest('.status-option');
+      if (option) {
+        const status = option.dataset.status;
+        if (state.filters.projectStatus === status) {
+          setProjectStatusFilter(null); // Toggle off if already selected
+        } else {
+          setProjectStatusFilter(status);
+        }
+        elements.statusDropdown.classList.add('hidden');
+        applyFilters();
       }
-      elements.statusDropdown.classList.add('hidden');
-      applyFilters();
-    }
-  });
+    });
+  }
   
-  // Labels dropdown
-  elements.labelsDropdownBtn.addEventListener('click', () => {
-    elements.labelsDropdown.classList.toggle('hidden');
-    elements.statusDropdown.classList.add('hidden');
-  });
-  
-  elements.labelsDropdown.addEventListener('click', (e) => {
-    const option = e.target.closest('.label-option');
-    if (option) {
-      const label = option.dataset.label;
-      if (state.filters.labels.includes(label)) {
-        removeLabelFilter(label);
-      } else {
-        addLabelFilter(label);
+  // Labels dropdown (only if elements exist)
+  if (elements.labelsDropdownBtn && elements.labelsDropdown) {
+    elements.labelsDropdownBtn.addEventListener('click', () => {
+      elements.labelsDropdown.classList.toggle('hidden');
+      elements.statusDropdown?.classList.add('hidden');
+    });
+    
+    elements.labelsDropdown.addEventListener('click', (e) => {
+      const option = e.target.closest('.label-option');
+      if (option) {
+        const label = option.dataset.label;
+        if (state.filters.labels.includes(label)) {
+          removeLabelFilter(label);
+        } else {
+          addLabelFilter(label);
+        }
+        applyFilters();
       }
-      applyFilters();
-    }
-  });
+    });
+  }
   
   // Close dropdowns on outside click
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('#status-dropdown-btn') && !e.target.closest('#status-dropdown')) {
+    if (elements.statusDropdown && !e.target.closest('#status-dropdown-btn') && !e.target.closest('#status-dropdown')) {
       elements.statusDropdown.classList.add('hidden');
     }
-    if (!e.target.closest('#labels-dropdown-btn') && !e.target.closest('#labels-dropdown')) {
+    if (elements.labelsDropdown && !e.target.closest('#labels-dropdown-btn') && !e.target.closest('#labels-dropdown')) {
       elements.labelsDropdown.classList.add('hidden');
     }
     if (!e.target.closest('#search-input') && !e.target.closest('#search-suggestions')) {
