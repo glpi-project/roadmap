@@ -9,33 +9,45 @@
 
 /* Base styles */
 body {
-    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    font-family:
+        "Poppins",
+        system-ui,
+        -apple-system,
+        sans-serif;
 }
 
 /* Header & Hero Integration */
 .header-hero {
-    background-image: url('pics/Vector-5.png');
+    background-image: url("pics/Vector-5.png");
     background-size: 400px auto;
     background-position: left 45px;
     background-repeat: no-repeat;
     position: relative;
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(180deg, rgba(0, 165, 243, 0.8) 0%, rgba(0, 165, 243, 0.4) 100%);
+        background: linear-gradient(
+            180deg,
+            rgba(0, 165, 243, 0.8) 0%,
+            rgba(0, 165, 243, 0.4) 100%
+        );
         z-index: 0;
 
         .dark & {
-            background: linear-gradient(180deg, rgba(3, 7, 18, 0.9) 0%, rgba(3, 7, 18, 0.7) 100%);
+            background: linear-gradient(
+                180deg,
+                rgba(3, 7, 18, 0.9) 0%,
+                rgba(3, 7, 18, 0.7) 100%
+            );
         }
     }
 
-    &>div:not(.absolute) {
+    & > div:not(.absolute) {
         position: relative;
         z-index: 1;
     }
@@ -43,7 +55,7 @@ body {
     /* Align hero content with kanban columns */
     & .max-w-7xl {
         max-width: calc(var(--kanban-column-width) * 3 + 1.5rem * 2);
-        
+
         @media (max-width: 1024px) {
             max-width: 100%;
         }
@@ -55,7 +67,7 @@ body {
     /* Make inner container match 3 kanban columns width on desktop */
     & > div {
         max-width: calc(var(--kanban-column-width) * 3 + 1.5rem * 2);
-        
+
         @media (max-width: 1024px) {
             max-width: 100%;
         }
@@ -92,13 +104,13 @@ body {
     }
 
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -130px;
         right: -40px;
         width: 650px;
         height: 650px;
-        background-image: url('pics/brush.svg');
+        background-image: url("pics/brush.svg");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: bottom right;
@@ -197,7 +209,7 @@ body {
 
             & .milestone-title,
             & .milestone-description {
-                color: #FFF; /* Maintain contrast on blue background */
+                color: #fff; /* Maintain contrast on blue background */
             }
 
             .dark & .milestone-title,
@@ -213,7 +225,7 @@ body {
                 color: #f1f5f9; /* Adjusted for dark mode readability */
             }
         }
-        
+
         & .milestone-description,
         & .milestone-description-placeholder {
             display: -webkit-box;
@@ -228,7 +240,8 @@ body {
     }
 
     & .issue-card {
-        transition: transform var(--transition-speed) ease,
+        transition:
+            transform var(--transition-speed) ease,
             box-shadow var(--transition-speed) ease;
         animation: cardFadeIn 0.3s ease-out forwards;
 
@@ -271,7 +284,7 @@ body {
             animation-delay: 200ms;
         }
 
-        &:nth-child(n+6) {
+        &:nth-child(n + 6) {
             animation-delay: 250ms;
         }
     }
@@ -285,7 +298,7 @@ body {
     padding: 0.125rem 0.5rem;
     border-radius: 0.25rem;
     white-space: nowrap;
-    
+
     /* Neutral background with colored border and text */
     background-color: rgb(249 250 251);
     border: 1px solid var(--label-color);
@@ -295,11 +308,31 @@ body {
         background-color: rgb(31 41 55);
         /* Lighten the color for better contrast in dark mode */
         --lightness-threshold: 0.6;
-        --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
-        --lighten-by: calc((var(--lightness-threshold) - var(--perceived-lightness)) * 100 * var(--lightness-switch));
-        
-        border-color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
-        color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+        --lightness-switch: max(
+            0,
+            min(
+                calc(
+                    (var(--perceived-lightness) - var(--lightness-threshold)) *
+                        -1000
+                ),
+                1
+            )
+        );
+        --lighten-by: calc(
+            (var(--lightness-threshold) - var(--perceived-lightness)) * 100 *
+                var(--lightness-switch)
+        );
+
+        border-color: hsl(
+            var(--label-h),
+            calc(var(--label-s) * 1%),
+            calc((var(--label-l) + var(--lighten-by)) * 1%)
+        );
+        color: hsl(
+            var(--label-h),
+            calc(var(--label-s) * 1%),
+            calc((var(--label-l) + var(--lighten-by)) * 1%)
+        );
     }
 }
 

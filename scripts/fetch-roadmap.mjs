@@ -1,14 +1,14 @@
-import { graphql } from '@octokit/graphql';
-import { writeFileSync, mkdirSync, appendFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { graphql } from "@octokit/graphql";
+import { writeFileSync, mkdirSync, appendFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 // Load .env file if present (for local development)
 try {
-  const dotenv = await import('dotenv');
-  dotenv.config();
+    const dotenv = await import("dotenv");
+    dotenv.config();
 } catch (e) {
-  // dotenv not available, using environment variables directly
+    // dotenv not available, using environment variables directly
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,23 +19,23 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const PROJECT_URL = process.env.PROJECT_URL;
 
 if (!GITHUB_TOKEN) {
-  console.error('Error: GITHUB_TOKEN environment variable is required');
-  process.exit(1);
+    console.error("Error: GITHUB_TOKEN environment variable is required");
+    process.exit(1);
 }
 
 if (!PROJECT_URL) {
-  console.error('Error: PROJECT_URL environment variable is required');
-  process.exit(1);
+    console.error("Error: PROJECT_URL environment variable is required");
+    process.exit(1);
 }
 
 // Parse project URL to extract org and project number
 // Format: https://github.com/orgs/{org}/projects/{number}
 function parseProjectUrl(url) {
-  const match = url.match(/github\.com\/orgs\/([^/]+)\/projects\/(\d+)/);
-  if (!match) {
-    throw new Error(`Invalid project URL format: ${url}`);
-  }
-  return { org: match[1], projectNumber: parseInt(match[2], 10) };
+    const match = url.match(/github\.com\/orgs\/([^/]+)\/projects\/(\d+)/);
+    if (!match) {
+        throw new Error(`Invalid project URL format: ${url}`);
+    }
+    return { org: match[1], projectNumber: parseInt(match[2], 10) };
 }
 
 const { org, projectNumber } = parseProjectUrl(PROJECT_URL);
@@ -43,10 +43,10 @@ console.log(`Fetching project #${projectNumber} from org: ${org}`);
 
 // Create authenticated GraphQL client
 const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${GITHUB_TOKEN}`,
-    'GraphQL-Features': 'sub_issues',  // Enable sub-issues API
-  },
+    headers: {
+        authorization: `token ${GITHUB_TOKEN}`,
+        "GraphQL-Features": "sub_issues", // Enable sub-issues API
+    },
 });
 
 // GraphQL query to fetch project items with milestones and custom fields
@@ -133,195 +133,224 @@ const QUERY = `
 `;
 
 async function fetchAllItems() {
-  const items = [];
-  let cursor = null;
-  let projectInfo = null;
-  let projectFields = null;
+    const items = [];
+    let cursor = null;
+    let projectInfo = null;
+    let projectFields = null;
 
-  do {
-    const response = await graphqlWithAuth(QUERY, {
-      org,
-      projectNumber,
-      cursor,
-    });
-
-    const project = response.organization.projectV2;
-    
-    if (!projectInfo) {
-      projectInfo = {
-        title: project.title,
-        url: project.url,
-      };
-      
-      // Extract single-select fields (like Status)
-      projectFields = project.fields.nodes
-        .filter(field => field.options) // Only single-select fields have options
-        .map(field => ({
-          id: field.id,
-          name: field.name,
-          options: field.options.map(opt => ({
-            id: opt.id,
-            name: opt.name,
-            color: opt.color,
-          })),
-        }));
-      
-      console.log(`Found ${projectFields.length} custom fields:`, projectFields.map(f => f.name).join(', '));
-    }
-
-    const pageItems = project.items.nodes
-      .filter(node => node.content) // Include all issues (with or without milestones)
-      .filter(node => node.content.state === 'OPEN' || node.content.milestone) // Exclude closed issues without milestone
-      .filter(node => !node.content.milestone || node.content.milestone.state === 'OPEN') // Exclude closed milestones
-      .map(node => {
-        // Extract custom field values
-        const customFields = {};
-        node.fieldValues.nodes.forEach(fv => {
-          if (fv.field && fv.field.name) {
-            if (fv.name !== undefined) {
-              // Single select field
-              customFields[fv.field.name] = {
-                value: fv.name,
-                optionId: fv.optionId,
-              };
-            } else if (fv.text !== undefined) {
-              // Text field
-              customFields[fv.field.name] = {
-                value: fv.text,
-              };
-            }
-          }
+    do {
+        const response = await graphqlWithAuth(QUERY, {
+            org,
+            projectNumber,
+            cursor,
         });
 
-        return {
-          id: node.content.id,
-          title: node.content.title,
-          state: node.content.state,
-          url: node.content.url,
-          milestone: node.content.milestone ? {
-            title: node.content.milestone.title,
-            description: node.content.milestone.description,
-            dueOn: node.content.milestone.dueOn
-          } : null, // null for unplanned
-          labels: node.content.labels.nodes.map(label => ({
-            name: label.name,
-            color: label.color,
-          })),
-          description: node.content.body,
-          subIssues: node.content.subIssuesSummary ? {
-            total: node.content.subIssuesSummary.total,
-            completed: node.content.subIssuesSummary.completed,
-          } : null,
-          customFields,
-        };
-      });
+        const project = response.organization.projectV2;
 
-    items.push(...pageItems);
-    cursor = project.items.pageInfo.hasNextPage ? project.items.pageInfo.endCursor : null;
-    
-    console.log(`Fetched ${items.length} items so far...`);
-  } while (cursor);
+        if (!projectInfo) {
+            projectInfo = {
+                title: project.title,
+                url: project.url,
+            };
 
-  return { projectInfo, projectFields, items };
+            // Extract single-select fields (like Status)
+            projectFields = project.fields.nodes
+                .filter((field) => field.options) // Only single-select fields have options
+                .map((field) => ({
+                    id: field.id,
+                    name: field.name,
+                    options: field.options.map((opt) => ({
+                        id: opt.id,
+                        name: opt.name,
+                        color: opt.color,
+                    })),
+                }));
+
+            console.log(
+                `Found ${projectFields.length} custom fields:`,
+                projectFields.map((f) => f.name).join(", "),
+            );
+        }
+
+        const pageItems = project.items.nodes
+            .filter((node) => node.content) // Include all issues (with or without milestones)
+            .filter(
+                (node) =>
+                    node.content.state === "OPEN" || node.content.milestone,
+            ) // Exclude closed issues without milestone
+            .filter(
+                (node) =>
+                    !node.content.milestone ||
+                    node.content.milestone.state === "OPEN",
+            ) // Exclude closed milestones
+            .map((node) => {
+                // Extract custom field values
+                const customFields = {};
+                node.fieldValues.nodes.forEach((fv) => {
+                    if (fv.field && fv.field.name) {
+                        if (fv.name !== undefined) {
+                            // Single select field
+                            customFields[fv.field.name] = {
+                                value: fv.name,
+                                optionId: fv.optionId,
+                            };
+                        } else if (fv.text !== undefined) {
+                            // Text field
+                            customFields[fv.field.name] = {
+                                value: fv.text,
+                            };
+                        }
+                    }
+                });
+
+                return {
+                    id: node.content.id,
+                    title: node.content.title,
+                    state: node.content.state,
+                    url: node.content.url,
+                    milestone: node.content.milestone
+                        ? {
+                              title: node.content.milestone.title,
+                              description: node.content.milestone.description,
+                              dueOn: node.content.milestone.dueOn,
+                          }
+                        : null, // null for unplanned
+                    labels: node.content.labels.nodes.map((label) => ({
+                        name: label.name,
+                        color: label.color,
+                    })),
+                    description: node.content.body,
+                    subIssues: node.content.subIssuesSummary
+                        ? {
+                              total: node.content.subIssuesSummary.total,
+                              completed:
+                                  node.content.subIssuesSummary.completed,
+                          }
+                        : null,
+                    customFields,
+                };
+            });
+
+        items.push(...pageItems);
+        cursor = project.items.pageInfo.hasNextPage
+            ? project.items.pageInfo.endCursor
+            : null;
+
+        console.log(`Fetched ${items.length} items so far...`);
+    } while (cursor);
+
+    return { projectInfo, projectFields, items };
 }
 
 function groupByMilestone(items) {
-  const milestoneMap = new Map();
-  const TO_BE_PLANNED = 'To be planned';
+    const milestoneMap = new Map();
+    const TO_BE_PLANNED = "To be planned";
 
-  for (const item of items) {
-    const isUnplanned = !item.milestone;
-    const milestoneTitle = isUnplanned ? TO_BE_PLANNED : item.milestone.title;
-    const dueOn = isUnplanned ? null : item.milestone.dueOn;
-    const description = isUnplanned ? 'Issues without milestone yet' : item.milestone.description;
+    for (const item of items) {
+        const isUnplanned = !item.milestone;
+        const milestoneTitle = isUnplanned
+            ? TO_BE_PLANNED
+            : item.milestone.title;
+        const dueOn = isUnplanned ? null : item.milestone.dueOn;
+        const description = isUnplanned
+            ? "Issues without milestone yet"
+            : item.milestone.description;
 
-    if (!milestoneMap.has(milestoneTitle)) {
-      milestoneMap.set(milestoneTitle, {
-        title: milestoneTitle,
-        description: description,
-        dueOn: dueOn,
-        issues: []
-      });
+        if (!milestoneMap.has(milestoneTitle)) {
+            milestoneMap.set(milestoneTitle, {
+                title: milestoneTitle,
+                description: description,
+                dueOn: dueOn,
+                issues: [],
+            });
+        }
+
+        milestoneMap.get(milestoneTitle).issues.push({
+            id: item.id,
+            title: item.title,
+            state: item.state,
+            url: item.url,
+            labels: item.labels,
+            description: item.description,
+            subIssues: item.subIssues,
+            customFields: item.customFields,
+        });
     }
-    
-    milestoneMap.get(milestoneTitle).issues.push({
-      id: item.id,
-      title: item.title,
-      state: item.state,
-      url: item.url,
-      labels: item.labels,
-      description: item.description,
-      subIssues: item.subIssues,
-      customFields: item.customFields,
-    });
-  }
 
-  // Convert to array, sort alphabetically, but keep "To be planned" at the end
-  return Array.from(milestoneMap.values())
-    .sort((a, b) => {
-      if (a.title === TO_BE_PLANNED) return 1;
-      if (b.title === TO_BE_PLANNED) return -1;
-      return a.title.localeCompare(b.title);
+    // Convert to array, sort alphabetically, but keep "To be planned" at the end
+    return Array.from(milestoneMap.values()).sort((a, b) => {
+        if (a.title === TO_BE_PLANNED) return 1;
+        if (b.title === TO_BE_PLANNED) return -1;
+        return a.title.localeCompare(b.title);
     });
 }
 
 async function main() {
-  try {
-    console.log('Fetching roadmap data from GitHub...');
-    const { projectInfo, projectFields, items } = await fetchAllItems();
-    
-    console.log(`Total items with milestones: ${items.length}`);
+    try {
+        console.log("Fetching roadmap data from GitHub...");
+        const { projectInfo, projectFields, items } = await fetchAllItems();
 
-    const milestones = groupByMilestone(items);
-    console.log(`Grouped into ${milestones.length} milestones`);
+        console.log(`Total items with milestones: ${items.length}`);
 
-    const outputData = {
-      generated_at: new Date().toISOString(),
-      project: projectInfo,
-      fields: projectFields,
-      milestones,
-    };
+        const milestones = groupByMilestone(items);
+        console.log(`Grouped into ${milestones.length} milestones`);
 
-    // Ensure public directory exists
-    const publicDir = join(__dirname, '..', 'public');
-    mkdirSync(publicDir, { recursive: true });
+        const outputData = {
+            generated_at: new Date().toISOString(),
+            project: projectInfo,
+            fields: projectFields,
+            milestones,
+        };
 
-    // Write output
-    const outputPath = join(publicDir, 'roadmap-data.json');
-    writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
-    console.log(`Output written to: ${outputPath}`);
+        // Ensure public directory exists
+        const publicDir = join(__dirname, "..", "public");
+        mkdirSync(publicDir, { recursive: true });
 
-  } catch (error) {
-    console.error('Error fetching roadmap:', error.message);
-    if (error.errors) {
-      console.error('GraphQL errors:', JSON.stringify(error.errors, null, 2));
-    }
+        // Write output
+        const outputPath = join(publicDir, "roadmap-data.json");
+        writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
+        console.log(`Output written to: ${outputPath}`);
+    } catch (error) {
+        console.error("Error fetching roadmap:", error.message);
+        if (error.errors) {
+            console.error(
+                "GraphQL errors:",
+                JSON.stringify(error.errors, null, 2),
+            );
+        }
 
-    // Report error to GitHub Job Summary if running in GitHub Actions
-    if (process.env.GITHUB_STEP_SUMMARY) {
-      try {
-        const summary = `
+        // Report error to GitHub Job Summary if running in GitHub Actions
+        if (process.env.GITHUB_STEP_SUMMARY) {
+            try {
+                const summary = `
 ### ❌ Roadmap Fetching Failed
 
 **Error message:** \`${error.message}\`
 
-${error.errors ? `
+${
+    error.errors
+        ? `
 **GraphQL Errors:**
 \`\`\`json
 ${JSON.stringify(error.errors, null, 2)}
 \`\`\`
-` : ''}
+`
+        : ""
+}
 
 **Time:** ${new Date().toISOString()}
 `;
-        appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
-      } catch (summaryError) {
-        console.error('Failed to write to GITHUB_STEP_SUMMARY:', summaryError.message);
-      }
-    }
+                appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
+            } catch (summaryError) {
+                console.error(
+                    "Failed to write to GITHUB_STEP_SUMMARY:",
+                    summaryError.message,
+                );
+            }
+        }
 
-    process.exit(1);
-  }
+        process.exit(1);
+    }
 }
 
 main();
