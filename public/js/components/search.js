@@ -189,6 +189,16 @@ export function renderActiveFilters() {
         "hidden",
         badges.length === 0 && !elements.searchInput.value,
     );
+
+    // Hide placeholder when there are active filter badges
+    if (badges.length > 0) {
+        elements.searchInput.dataset.originalPlaceholder =
+            elements.searchInput.placeholder;
+        elements.searchInput.placeholder = "";
+    } else if (elements.searchInput.dataset.originalPlaceholder) {
+        elements.searchInput.placeholder =
+            elements.searchInput.dataset.originalPlaceholder;
+    }
 }
 
 /**
@@ -322,6 +332,26 @@ function setupEventListeners() {
             applyFilters();
         } else if (e.key === "Escape") {
             elements.searchSuggestions.classList.add("hidden");
+        } else if (e.key === "Backspace" && elements.searchInput.value === "") {
+            // Remove the last filter badge when backspace is pressed on empty input
+            if (state.filters.labels.length > 0) {
+                // Remove the last label filter
+                const lastLabel =
+                    state.filters.labels[state.filters.labels.length - 1];
+                removeLabelFilter(lastLabel);
+                applyFilters();
+                e.preventDefault();
+            } else if (state.filters.projectStatus) {
+                // Remove the status filter
+                setProjectStatusFilter(null);
+                applyFilters();
+                e.preventDefault();
+            } else if (state.filters.text) {
+                // Remove the text filter
+                setTextFilter("");
+                applyFilters();
+                e.preventDefault();
+            }
         }
     });
 
