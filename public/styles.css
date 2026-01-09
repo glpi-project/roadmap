@@ -146,7 +146,7 @@ body {
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
-        background-color: rgb(240, 249, 253);
+        background-color: #f3f4f6;
         border-radius: 1rem;
         transition: background-color 0.3s ease;
 
@@ -155,7 +155,7 @@ body {
         }
 
         &.last-column {
-            background-color: transparent;
+            background-color: rgba(243, 244, 246, 0.5); /* Slightly more subtle grey for last column */
         }
 
         & .column-header {
@@ -171,7 +171,16 @@ body {
             color: #1e2b62;
 
             .dark & {
-                color: #f1f5f9; /* Adjusted for dark mode readability */
+                color: #f8fafc;
+            }
+        }
+
+        &.column-0,
+        &.column-1 {
+            background-color: #f8fafc;
+
+            .dark & {
+                background-color: rgba(255, 255, 255, 0.05);
             }
         }
 
