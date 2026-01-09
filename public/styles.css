@@ -328,8 +328,55 @@ body {
     }
 }
 
+/* Sub-issues progress bar */
+.sub-issues-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
 
-/* Filters & Marks */
+    .dark & {
+        color: #9ca3af;
+    }
+}
+
+.sub-issues-bar {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+    max-width: 120px;
+    height: 6px;
+}
+
+.sub-issues-segment {
+    flex: 1;
+    height: 100%;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+
+    &.completed {
+        background-color: #22c55e;
+
+        .dark & {
+            background-color: #4ade80;
+        }
+    }
+
+    &.pending {
+        background-color: #e5e7eb;
+
+        .dark & {
+            background-color: #374151;
+        }
+    }
+}
+
+.sub-issues-count {
+    font-weight: 500;
+    white-space: nowrap;
+}
 
 mark {
     animation: highlightPulse 0.3s ease-out;

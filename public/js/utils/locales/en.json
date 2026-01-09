@@ -17,5 +17,6 @@
   "showing_results": "Showing {count} of {total} issues",
   "filter_text": "text",
   "filter_status": "status",
-  "filter_label": "label"
+  "filter_label": "label",
+  "sub_issues": "Sub-issues"
 }

@@ -2,6 +2,7 @@
 
 import { getLuminance, highlightText, hexToRgb, hexToHsl, getPerceivedLightness, truncateText, escapeHtml } from '../utils/helpers.js';
 import { state } from '../utils/state.js';
+import { t } from '../utils/i18n.js';
 
 // Status color mapping based on GitHub Project colors
 const STATUS_COLORS = {
@@ -28,6 +29,32 @@ function getStatusColors(statusValue) {
 }
 
 /**
+ * Render sub-issues progress bar
+ * @param {Object} subIssues - Sub-issues summary { total, completed }
+ * @returns {string} HTML string
+ */
+function renderSubIssuesProgress(subIssues) {
+  if (!subIssues || subIssues.total === 0) return '';
+  
+  const { total, completed } = subIssues;
+  const percentage = Math.round((completed / total) * 100);
+  
+  // Create segments for the progress bar
+  const segments = [];
+  for (let i = 0; i < total; i++) {
+    const isCompleted = i < completed;
+    segments.push(`<div class="sub-issues-segment ${isCompleted ? 'completed' : 'pending'}"></div>`);
+  }
+  
+  return `
+    <div class="sub-issues-progress" title="${t('sub_issues')}: ${completed}/${total} (${percentage}%)">
+      <div class="sub-issues-bar">${segments.join('')}</div>
+      <span class="sub-issues-count">${completed}/${total}</span>
+    </div>
+  `;
+}
+
+/**
  * Render an issue card
  * @param {Object} issue - Issue object
  * @returns {string} HTML string
@@ -35,6 +62,7 @@ function getStatusColors(statusValue) {
 export function renderCard(issue) {
   const labelsHtml = renderLabels(issue.labels);
   const title = highlightText(issue.title, state.filters.text);
+  const subIssuesHtml = renderSubIssuesProgress(issue.subIssues);
   
   // Get project status
   const projectStatus = issue.customFields?.Status?.value;
@@ -58,6 +86,7 @@ export function renderCard(issue) {
           ${truncateText(issue.description, 120)}
         </p>
       ` : ''}
+      ${subIssuesHtml}
       ${labelsHtml ? `<div class="flex flex-wrap gap-1.5 mt-3">${labelsHtml}</div>` : ''}
     </div>
   `;

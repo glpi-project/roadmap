@@ -17,5 +17,6 @@
   "showing_results": "Mostrando {count} de {total} tickets",
   "filter_text": "texto",
   "filter_status": "estado",
-  "filter_label": "etiqueta"
+  "filter_label": "etiqueta",
+  "sub_issues": "Sub-tickets"
 }

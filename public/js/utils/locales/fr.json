@@ -17,5 +17,6 @@
   "showing_results": "Affichage de {count} sur {total} tickets",
   "filter_text": "texte",
   "filter_status": "statut",
-  "filter_label": "label"
+  "filter_label": "label",
+  "sub_issues": "Sous-tickets"
 }

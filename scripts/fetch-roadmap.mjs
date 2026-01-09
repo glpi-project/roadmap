@@ -45,6 +45,7 @@ console.log(`Fetching project #${projectNumber} from org: ${org}`);
 const graphqlWithAuth = graphql.defaults({
   headers: {
     authorization: `token ${GITHUB_TOKEN}`,
+    'GraphQL-Features': 'sub_issues',  // Enable sub-issues API
   },
 });
 
@@ -118,6 +119,10 @@ const QUERY = `
                   }
                 }
                 body
+                subIssuesSummary {
+                  total
+                  completed
+                }
               }
             }
           }
@@ -166,6 +171,7 @@ async function fetchAllItems() {
 
     const pageItems = project.items.nodes
       .filter(node => node.content) // Include all issues (with or without milestones)
+      .filter(node => node.content.state === 'OPEN' || node.content.milestone) // Exclude closed issues without milestone
       .filter(node => !node.content.milestone || node.content.milestone.state === 'OPEN') // Exclude closed milestones
       .map(node => {
         // Extract custom field values
@@ -202,6 +208,10 @@ async function fetchAllItems() {
             color: label.color,
           })),
           description: node.content.body,
+          subIssues: node.content.subIssuesSummary ? {
+            total: node.content.subIssuesSummary.total,
+            completed: node.content.subIssuesSummary.completed,
+          } : null,
           customFields,
         };
       });
@@ -241,6 +251,7 @@ function groupByMilestone(items) {
       url: item.url,
       labels: item.labels,
       description: item.description,
+      subIssues: item.subIssues,
       customFields: item.customFields,
     });
   }
