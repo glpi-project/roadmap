@@ -233,7 +233,7 @@ function groupByMilestone(items) {
     const isUnplanned = !item.milestone;
     const milestoneTitle = isUnplanned ? TO_BE_PLANNED : item.milestone.title;
     const dueOn = isUnplanned ? null : item.milestone.dueOn;
-    const description = isUnplanned ? null : item.milestone.description;
+    const description = isUnplanned ? 'Issues without milestone yet' : item.milestone.description;
 
     if (!milestoneMap.has(milestoneTitle)) {
       milestoneMap.set(milestoneTitle, {

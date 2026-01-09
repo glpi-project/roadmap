@@ -159,6 +159,11 @@ body {
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             flex-shrink: 0;
+            border-bottom: 1px dashed #aab7ee;
+
+            .dark & {
+                border-bottom-color: #4b5563;
+            }
         }
 
         & .milestone-title {
@@ -176,6 +181,7 @@ body {
             /* Reset backdrop filter to avoid strange blending with solid color */
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
+            border-bottom: none;
 
             & .milestone-title,
             & .milestone-description {
@@ -187,6 +193,7 @@ body {
             background-color: #40b0e5;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
+            border-bottom: none;
 
             & .milestone-title,
             & .milestone-description {
