@@ -3,7 +3,7 @@ name: Deploy Roadmap
 on:
   # Run every 6 hours
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: "0 */6 * * *"
   # Allow manual trigger
   workflow_dispatch:
   # Run on push to main
@@ -36,8 +36,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -48,13 +48,16 @@ jobs:
           PROJECT_URL: ${{ vars.PROJECT_URL || 'https://github.com/orgs/glpi-project/projects/25' }}
         run: npm run fetch
 
+      - name: Build Tailwind CSS
+        run: npm run build:css
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './public'
+          path: "./public"
 
       - name: Deploy to GitHub Pages
         id: deployment

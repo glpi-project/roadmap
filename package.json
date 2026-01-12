@@ -1,17 +1,21 @@
 {
-  "name": "glpi-roadmap",
-  "version": "1.0.0",
-  "description": "Public roadmap Kanban board for GLPI",
-  "type": "module",
-  "scripts": {
-    "fetch": "node scripts/fetch-roadmap.mjs",
-    "dev": "npx serve public"
-  },
-  "dependencies": {
-    "@octokit/graphql": "^7.0.0",
-    "dotenv": "^16.3.0"
-  },
-  "devDependencies": {
-    "prettier": "^3.7.4"
-  }
+    "name": "glpi-roadmap",
+    "version": "1.0.0",
+    "description": "Public roadmap Kanban board for GLPI",
+    "type": "module",
+    "scripts": {
+        "fetch": "node scripts/fetch-roadmap.mjs",
+        "build:css": "tailwindcss -i ./src/input.css -o ./public/tailwind.css",
+        "dev": "npm run build:css && npx serve public"
+    },
+    "dependencies": {
+        "@octokit/graphql": "^7.0.0",
+        "dotenv": "^16.3.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.23",
+        "postcss": "^8.5.6",
+        "prettier": "^3.7.4",
+        "tailwindcss": "^3.4.17"
+    }
 }

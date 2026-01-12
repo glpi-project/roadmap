@@ -1,454 +1,249 @@
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title data-i18n="title">Roadmap</title>
-        <meta
-            name="description"
-            content="Public roadmap for GLPI - Track upcoming features and improvements"
-            data-i18n="description"
-            data-i18n-target="content"
-        />
 
-        <!-- Google Fonts - Poppins -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="title">Roadmap</title>
+    <meta name="description" content="Public roadmap for GLPI - Track upcoming features and improvements"
+        data-i18n="description" data-i18n-target="content" />
 
-        <!-- TailwindCSS via CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        colors: {
-                            primary: {
-                                50: "#eff6ff",
-                                100: "#dbeafe",
-                                200: "#bfdbfe",
-                                300: "#93c5fd",
-                                400: "#60a5fa",
-                                500: "#3b82f6",
-                                600: "#2563eb",
-                                700: "#1d4ed8",
-                                800: "#1e40af",
-                                900: "#1e3a8a",
-                            },
-                        },
-                    },
-                },
-            };
-        </script>
 
-        <link rel="stylesheet" href="styles.css" />
-    </head>
-    <body
-        class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300"
-    >
-        <!-- Header & Hero Combined -->
-        <header
-            class="header-hero bg-[#00a5f3] dark:bg-gray-950 text-white relative"
-        >
-            <!-- Absolute Utility Bar -->
-            <div
-                class="absolute top-4 right-4 sm:top-6 sm:right-8 flex items-center gap-4 z-30"
-            >
-                <!-- Language Switcher -->
-                <div class="relative mr-1">
-                    <button
-                        id="lang-dropdown-btn"
-                        class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg"
-                        aria-label="Switch language"
-                    >
-                        <svg
-                            class="w-6 h-6 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.39 8.073 16.5 3 18.5M15.5 15.5L14 14"
-                            />
-                        </svg>
-                        <span
-                            id="current-lang-text"
-                            class="text-xs font-bold uppercase"
-                            >EN</span
-                        >
-                    </button>
-                    <div
-                        id="lang-dropdown"
-                        class="hidden absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden"
-                    >
-                        <button
-                            class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
-                            data-lang="en"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 60 30"
-                                class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm"
-                            >
-                                <clipPath id="s">
-                                    <path d="M0,0 v30 h60 v-30 z" />
-                                </clipPath>
-                                <clipPath id="t">
-                                    <path
-                                        d="M30,15 h30 v15 z v0 h-30 z v0 h-30 v-15 z v0 h30 z"
-                                    />
-                                </clipPath>
-                                <g clip-path="url(#s)">
-                                    <path
-                                        d="M0,0 v30 h60 v-30 z"
-                                        fill="#012169"
-                                    />
-                                    <path
-                                        d="M0,0 L60,30 M60,0 L0,30"
-                                        stroke="#fff"
-                                        stroke-width="6"
-                                    />
-                                    <path
-                                        d="M0,0 L60,30 M60,0 L0,30"
-                                        stroke="#C8102E"
-                                        stroke-width="4"
-                                        clip-path="url(#t)"
-                                    />
-                                    <path
-                                        d="M30,0 v30 M0,15 h60"
-                                        stroke="#fff"
-                                        stroke-width="10"
-                                    />
-                                    <path
-                                        d="M30,0 v30 M0,15 h60"
-                                        stroke="#C8102E"
-                                        stroke-width="6"
-                                    />
-                                </g>
-                            </svg>
-                            <span class="flex-1">English</span>
-                            <span class="text-xs opacity-50">EN</span>
-                        </button>
-                        <button
-                            class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
-                            data-lang="fr"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 3 2"
-                                class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm"
-                            >
-                                <rect width="3" height="2" fill="#ED2939" />
-                                <rect width="2" height="2" fill="#fff" />
-                                <rect width="1" height="2" fill="#002395" />
-                            </svg>
-                            <span class="flex-1">Français</span>
-                            <span class="text-xs opacity-50">FR</span>
-                        </button>
-                        <button
-                            class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
-                            data-lang="es"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 750 500"
-                                class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm"
-                            >
-                                <rect width="750" height="500" fill="#c60b1e" />
-                                <rect
-                                    width="750"
-                                    height="250"
-                                    y="125"
-                                    fill="#ffc400"
-                                />
-                            </svg>
-                            <span class="flex-1">Español</span>
-                            <span class="text-xs opacity-50">ES</span>
-                        </button>
-                        <button
-                            class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
-                            data-lang="pt-br"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 720 504"
-                                class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm"
-                            >
-                                <rect width="720" height="504" fill="#009c3b" />
-                                <path
-                                    d="M360 41.4L646.6 252 360 462.6 73.4 252z"
-                                    fill="#ffdf00"
-                                />
-                                <circle
-                                    cx="360"
-                                    cy="252"
-                                    r="130"
-                                    fill="#002776"
-                                />
-                            </svg>
-                            <span class="flex-1">Português</span>
-                            <span class="text-xs opacity-50">PT</span>
-                        </button>
-                    </div>
-                </div>
+    <link rel="stylesheet" href="tailwind.css" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
 
-                <button
-                    id="theme-toggle"
-                    class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg"
-                    aria-label="Toggle dark mode"
-                >
-                    <svg
-                        class="w-6 h-6 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path
-                            class="hidden dark:block"
-                            fill-rule="evenodd"
-                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                            clip-rule="evenodd"
-                        />
-                        <path
-                            class="dark:hidden"
-                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                        />
+<body class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Header & Hero Combined -->
+    <header class="header-hero bg-[#00a5f3] dark:bg-gray-950 text-white relative">
+        <!-- Absolute Utility Bar -->
+        <div class="absolute top-4 right-4 sm:top-6 sm:right-8 flex items-center gap-4 z-30">
+            <!-- Language Switcher -->
+            <div class="relative mr-1">
+                <button id="lang-dropdown-btn"
+                    class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg"
+                    aria-label="Switch language">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.39 8.073 16.5 3 18.5M15.5 15.5L14 14" />
                     </svg>
+                    <span id="current-lang-text" class="text-xs font-bold uppercase">EN</span>
                 </button>
-            </div>
-
-            <!-- Centered Content -->
-            <div class="max-w-7xl mx-auto py-10 sm:py-16">
-                <div
-                    class="flex flex-col lg:flex-row items-center justify-between gap-8"
-                >
-                    <!-- Left Column: Content -->
-                    <div class="lg:flex-[1.5] text-center lg:text-left">
-                        <!-- Main Branding -->
-                        <div
-                            class="flex flex-col items-center lg:items-start mb-8 sm:mb-10"
-                        >
-                            <h1
-                                class="text-3xl sm:text-5xl font-extrabold flex flex-col sm:flex-row items-center gap-4"
-                            >
-                                <img
-                                    src="pics/logo-GLPI.png"
-                                    alt="GLPI"
-                                    class="h-16 sm:h-24 drop-shadow-2xl"
-                                    aria-label="GLPI"
-                                />
-                                <span data-i18n="title">Roadmap</span>
-                            </h1>
-                        </div>
-
-                        <h2
-                            class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight drop-shadow-md"
-                            data-i18n="hero_title"
-                        >
-                            Building the Future of GLPI. Together.
-                        </h2>
-                        <p
-                            class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm max-w-3xl mx-auto lg:mx-0"
-                            data-i18n="hero_description"
-                        >
-                            Explore our community-driven roadmap—a guide to our
-                            development journey, with major updates delivered
-                            every year.
-                        </p>
-
-                        <div
-                            class="flex flex-wrap justify-center lg:justify-start"
-                        >
-                            <p
-                                class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm"
-                            >
-                                <span data-i18n="hero_cta_prefix"
-                                    >Make your voice count and</span
-                                >
-                                <a
-                                    href="https://github.com/glpi-project/roadmap/discussions"
-                                    target="_blank"
-                                    rel="noopener"
-                                    class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/10 text-[#00a5f3] dark:text-white font-bold rounded-xl hover:bg-white/90 dark:hover:bg-white/20 transition-all shadow-2xl hover:scale-105 group border border-transparent dark:border-white/20 ml-3"
-                                >
-                                    <svg
-                                        class="w-6 h-6 transition-transform group-hover:rotate-12"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.015 21.985a.5.5 0 00.62.62L7 20.662c1.47.851 3.179 1.338 5 1.338 5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.444 0-2.822-.375-4.04-1.04a.5.5 0 00-.503-.02l-3.32.96.96-3.32a.5.5 0 00-.02-.503C4.375 14.822 4 13.444 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8zm-2-9a1 1 0 112 0 1 1 0 01-2 0zm-3 0a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z"
-                                        />
-                                    </svg>
-                                    <span data-i18n="hero_cta_text"
-                                        >Join the Conversation</span
-                                    >
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Illustration -->
-                    <div class="flex-1 flex justify-center lg:justify-end">
-                        <img
-                            src="pics/scene.svg"
-                            alt="Illustration"
-                            class="w-full max-w-sm drop-shadow-2xl"
-                        />
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Search Bar -->
-        <div id="search-bar" class="hidden px-4 sm:px-6 lg:px-8 py-7">
-            <div class="mx-auto">
-                <!-- Main Search Container -->
-                <div class="relative">
-                    <div
-                        id="search-input-container"
-                        class="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 dark:border dark:border-gray-600 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all"
-                    >
-                        <!-- Search Icon -->
-                        <svg
-                            class="w-5 h-5 text-gray-400 flex-shrink-0"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
+                <div id="lang-dropdown"
+                    class="hidden absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+                    <button
+                        class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
+                        data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"
+                            class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm">
+                            <clipPath id="s">
+                                <path d="M0,0 v30 h60 v-30 z" />
+                            </clipPath>
+                            <clipPath id="t">
+                                <path d="M30,15 h30 v15 z v0 h-30 z v0 h-30 v-15 z v0 h30 z" />
+                            </clipPath>
+                            <g clip-path="url(#s)">
+                                <path d="M0,0 v30 h60 v-30 z" fill="#012169" />
+                                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
+                                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"
+                                    clip-path="url(#t)" />
+                                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
+                            </g>
                         </svg>
-
-                        <!-- Active Filters (badges) -->
-                        <div id="active-filters" class="flex flex-wrap gap-1.5">
-                            <!-- Filter badges will be inserted here -->
-                        </div>
-
-                        <!-- Text Input -->
-                        <input
-                            type="text"
-                            id="search-input"
-                            class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 text-sm min-w-[120px]"
-                            placeholder="Filter features..."
-                            autocomplete="off"
-                            data-i18n="search_placeholder"
-                            data-i18n-target="placeholder"
-                        />
-
-                        <!-- Results count (inline) -->
-                        <span
-                            id="results-count"
-                            class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap"
-                        ></span>
-
-                        <!-- Clear Button -->
-                        <button
-                            id="clear-search"
-                            class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                            aria-label="Clear search"
-                        >
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Suggestions Dropdown -->
-                    <div
-                        id="search-suggestions"
-                        class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto"
-                    >
-                        <!-- Suggestions will be inserted here -->
-                    </div>
+                        <span class="flex-1">English</span>
+                        <span class="text-xs opacity-50">EN</span>
+                    </button>
+                    <button
+                        class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
+                        data-lang="fr">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2"
+                            class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm">
+                            <rect width="3" height="2" fill="#ED2939" />
+                            <rect width="2" height="2" fill="#fff" />
+                            <rect width="1" height="2" fill="#002395" />
+                        </svg>
+                        <span class="flex-1">Français</span>
+                        <span class="text-xs opacity-50">FR</span>
+                    </button>
+                    <button
+                        class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
+                        data-lang="es">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500"
+                            class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm">
+                            <rect width="750" height="500" fill="#c60b1e" />
+                            <rect width="750" height="250" y="125" fill="#ffc400" />
+                        </svg>
+                        <span class="flex-1">Español</span>
+                        <span class="text-xs opacity-50">ES</span>
+                    </button>
+                    <button
+                        class="lang-option w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-3"
+                        data-lang="pt-br">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 504"
+                            class="w-5 h-4 flex-shrink-0 rounded-sm shadow-sm">
+                            <rect width="720" height="504" fill="#009c3b" />
+                            <path d="M360 41.4L646.6 252 360 462.6 73.4 252z" fill="#ffdf00" />
+                            <circle cx="360" cy="252" r="130" fill="#002776" />
+                        </svg>
+                        <span class="flex-1">Português</span>
+                        <span class="text-xs opacity-50">PT</span>
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Loading State -->
-        <div id="loading" class="flex items-center justify-center py-20">
-            <div class="flex flex-col items-center gap-4">
-                <div
-                    class="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"
-                ></div>
-                <p class="text-gray-600 dark:text-gray-400" data-i18n="loading">
-                    Loading roadmap...
-                </p>
-            </div>
-        </div>
-
-        <!-- Error State -->
-        <div id="error" class="hidden max-w-md mx-auto py-20 px-4">
-            <div
-                class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-center"
-            >
-                <svg
-                    class="w-12 h-12 mx-auto text-red-500 mb-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+            <button id="theme-toggle"
+                class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md shadow-lg"
+                aria-label="Toggle dark mode">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path class="hidden dark:block" fill-rule="evenodd"
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        clip-rule="evenodd" />
+                    <path class="dark:hidden" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
-                <h2
-                    class="text-lg font-semibold text-red-800 dark:text-red-200 mb-2"
-                    data-i18n="error_title"
-                >
-                    Failed to load roadmap
-                </h2>
-                <p
-                    class="text-red-600 dark:text-red-400 text-sm"
-                    id="error-message"
-                ></p>
-            </div>
+            </button>
         </div>
 
-        <!-- Kanban Board -->
-        <main id="kanban" class="hidden">
-            <div class="kanban-container overflow-x-auto px-4 sm:px-6 lg:px-8">
-                <div id="columns" class="flex gap-6 min-w-max pb-4">
-                    <!-- Columns will be inserted here -->
+        <!-- Centered Content -->
+        <div class="max-w-7xl mx-auto py-10 sm:py-16">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left Column: Content -->
+                <div class="lg:flex-[1.5] text-center lg:text-left">
+                    <!-- Main Branding -->
+                    <div class="flex flex-col items-center lg:items-start mb-8 sm:mb-10">
+                        <h1 class="text-3xl sm:text-5xl font-extrabold flex flex-col sm:flex-row items-center gap-4">
+                            <img src="pics/logo-GLPI.png" alt="GLPI" class="h-16 sm:h-24 drop-shadow-2xl"
+                                aria-label="GLPI" />
+                            <span data-i18n="title">Roadmap</span>
+                        </h1>
+                    </div>
+
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight drop-shadow-md"
+                        data-i18n="hero_title">
+                        Building the Future of GLPI. Together.
+                    </h2>
+                    <p class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm max-w-3xl mx-auto lg:mx-0"
+                        data-i18n="hero_description">
+                        Explore our community-driven roadmap—a guide to our
+                        development journey, with major updates delivered
+                        every year.
+                    </p>
+
+                    <div class="flex flex-wrap justify-center lg:justify-start">
+                        <p class="text-base sm:text-xl text-white/90 font-medium leading-relaxed mb-8 drop-shadow-sm">
+                            <span data-i18n="hero_cta_prefix">Make your voice count and</span>
+                            <a href="https://github.com/glpi-project/roadmap/discussions" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/10 text-[#00a5f3] dark:text-white font-bold rounded-xl hover:bg-white/90 dark:hover:bg-white/20 transition-all shadow-2xl hover:scale-105 group border border-transparent dark:border-white/20 ml-3">
+                                <svg class="w-6 h-6 transition-transform group-hover:rotate-12" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.015 21.985a.5.5 0 00.62.62L7 20.662c1.47.851 3.179 1.338 5 1.338 5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.444 0-2.822-.375-4.04-1.04a.5.5 0 00-.503-.02l-3.32.96.96-3.32a.5.5 0 00-.02-.503C4.375 14.822 4 13.444 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8zm-2-9a1 1 0 112 0 1 1 0 01-2 0zm-3 0a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" />
+                                </svg>
+                                <span data-i18n="hero_cta_text">Join the Conversation</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Illustration -->
+                <div class="flex-1 flex justify-center lg:justify-end">
+                    <img src="pics/scene.svg" alt="Illustration" class="w-full max-w-sm drop-shadow-2xl" />
                 </div>
             </div>
-        </main>
+        </div>
+    </header>
 
-        <footer
-            class="mt-auto py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-200 dark:border-gray-800"
-        >
-            <div
-                class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400"
-            >
-                <p>© GLPI Project</p>
-                <span id="last-updated" class="font-medium"></span>
+    <!-- Search Bar -->
+    <div id="search-bar" class="hidden px-4 sm:px-6 lg:px-8 py-7">
+        <div class="mx-auto">
+            <!-- Main Search Container -->
+            <div class="relative">
+                <div id="search-input-container"
+                    class="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 dark:border dark:border-gray-600 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all">
+                    <!-- Search Icon -->
+                    <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+
+                    <!-- Active Filters (badges) -->
+                    <div id="active-filters" class="flex flex-wrap gap-1.5">
+                        <!-- Filter badges will be inserted here -->
+                    </div>
+
+                    <!-- Text Input -->
+                    <input type="text" id="search-input"
+                        class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 text-sm min-w-[120px]"
+                        placeholder="Filter features..." autocomplete="off" data-i18n="search_placeholder"
+                        data-i18n-target="placeholder" />
+
+                    <!-- Results count (inline) -->
+                    <span id="results-count" class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap"></span>
+
+                    <!-- Clear Button -->
+                    <button id="clear-search"
+                        class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        aria-label="Clear search">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Suggestions Dropdown -->
+                <div id="search-suggestions"
+                    class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+                    <!-- Suggestions will be inserted here -->
+                </div>
             </div>
-        </footer>
+        </div>
+    </div>
 
-        <script type="module" src="js/app.js"></script>
-    </body>
+    <!-- Loading State -->
+    <div id="loading" class="flex items-center justify-center py-20">
+        <div class="flex flex-col items-center gap-4">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"></div>
+            <p class="text-gray-600 dark:text-gray-400" data-i18n="loading">
+                Loading roadmap...
+            </p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="hidden max-w-md mx-auto py-20 px-4">
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-center">
+            <svg class="w-12 h-12 mx-auto text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 class="text-lg font-semibold text-red-800 dark:text-red-200 mb-2" data-i18n="error_title">
+                Failed to load roadmap
+            </h2>
+            <p class="text-red-600 dark:text-red-400 text-sm" id="error-message"></p>
+        </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <main id="kanban" class="hidden">
+        <div class="kanban-container overflow-x-auto px-4 sm:px-6 lg:px-8">
+            <div id="columns" class="flex gap-6 min-w-max pb-4">
+                <!-- Columns will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-auto py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-200 dark:border-gray-800">
+        <div
+            class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400">
+            <p>© GLPI Project</p>
+            <span id="last-updated" class="font-medium"></span>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+
 </html>
