@@ -116,9 +116,10 @@ export function renderCard(issue) {
         ${
             projectStatus
                 ? `
-          <span class="status-dot flex-shrink-0 w-3 h-3 rounded-full ${statusColors.dot} mt-1 cursor-pointer" 
-                title="${projectStatus}" 
-                aria-label="Status: ${projectStatus}" 
+          <span class="status-dot flex-shrink-0 w-3 h-3 rounded-full ${statusColors.dot} mt-1 cursor-pointer"
+                role="img"
+                title="${projectStatus}"
+                aria-label="Status: ${projectStatus}"
                 data-status="${projectStatus}"></span>
         `
                 : ""
