@@ -51,6 +51,11 @@ jobs:
       - name: Build Tailwind CSS
         run: npm run build:css
 
+      - name: Version Service Worker
+        run: |
+          VERSION=$(date +%s)
+          sed -i "s/{{BUILD_VERSION}}/$VERSION/g" public/sw.js
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
