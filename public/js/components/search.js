@@ -17,7 +17,6 @@ import {
     getTotalIssues,
     getStatusOptions,
 } from "../utils/state.js";
-import { t } from "../utils/i18n.js";
 
 // Status color classes mapping (matches GitHub project colors)
 const STATUS_COLOR_CLASSES = {
@@ -125,7 +124,7 @@ export function renderActiveFilters() {
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <span class="opacity-70 font-normal">${t("filter_text")}:</span>${state.filters.text}
+        <span class="opacity-70 font-normal">text:</span>${state.filters.text}
         <button class="remove-filter ml-1 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" data-type="text">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -145,7 +144,7 @@ export function renderActiveFilters() {
         badges.push(`
       <span class="filter-badge inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-800 ${colors.text} border border-gray-200 dark:border-gray-700">
         <span class="w-2.5 h-2.5 rounded-full ${colors.bg}"></span>
-        <span class="opacity-70 font-normal">${t("filter_status")}:</span>${state.filters.projectStatus}
+        <span class="opacity-70 font-normal">status:</span>${state.filters.projectStatus}
         <button class="remove-filter ml-1 hover:opacity-70 transition-opacity" data-type="projectStatus">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -174,7 +173,7 @@ export function renderActiveFilters() {
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/>
         </svg>
-        <span class="opacity-70 font-normal text-gray-600 dark:text-gray-400">${t("filter_label")}:</span><span>${label}</span>
+        <span class="opacity-70 font-normal text-gray-600 dark:text-gray-400">label:</span><span>${label}</span>
         <button class="remove-filter ml-1 hover:opacity-70 transition-opacity" data-type="label" data-value="${label}">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -209,10 +208,7 @@ export function updateResultsCount() {
     const total = getTotalIssues();
 
     if (hasActiveFilters()) {
-        elements.resultsCount.textContent = t("showing_results", {
-            count,
-            total,
-        });
+        elements.resultsCount.textContent = `Showing ${count} of ${total} issues`;
     } else {
         elements.resultsCount.textContent = "";
     }
@@ -244,7 +240,7 @@ function showSuggestions(query) {
             suggestions.push({
                 type: "projectStatus",
                 value: opt.name,
-                display: `${t("filter_status")}:${opt.name}`,
+                display: `status:${opt.name}`,
                 icon: `<span class="w-2.5 h-2.5 rounded-full ${colors.bg}"></span>`,
             });
         }
@@ -259,7 +255,7 @@ function showSuggestions(query) {
             suggestions.push({
                 type: "label",
                 value: label.name,
-                display: `${t("filter_label")}:${label.name}`,
+                display: `label:${label.name}`,
                 icon: `<span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: #${label.color}"></span>`,
             });
         }
@@ -294,7 +290,7 @@ function showSuggestions(query) {
         <button class="suggestion-item w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${i === 0 ? "bg-gray-50 dark:bg-gray-700/50" : ""}" data-type="${s.type}" data-value="${s.value.replace(/"/g, "&quot;")}">
           ${s.icon}
           <span class="truncate">${s.display}</span>
-          <span class="ml-auto text-xs text-gray-400">${s.type === "projectStatus" ? t("filter_status") : s.type === "label" ? t("filter_label") : t("filter_text")}</span>
+          <span class="ml-auto text-xs text-gray-400">${s.type === "projectStatus" ? "status" : s.type === "label" ? "label" : "text"}</span>
         </button>
       `,
           )

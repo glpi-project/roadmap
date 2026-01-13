@@ -10,7 +10,6 @@ import {
     escapeHtml,
 } from "../utils/helpers.js";
 import { state } from "../utils/state.js";
-import { t } from "../utils/i18n.js";
 
 // Status color mapping based on GitHub Project colors
 const STATUS_COLORS = {
@@ -89,7 +88,7 @@ function renderSubIssuesProgress(subIssues) {
     }
 
     return `
-    <div class="sub-issues-progress" title="${t("sub_issues")}: ${completed}/${total} (${percentage}%)">
+    <div class="sub-issues-progress" title="Sub-issues: ${completed}/${total} (${percentage}%)">
       <div class="sub-issues-bar">${segments.join("")}</div>
       <span class="sub-issues-count">${completed}/${total}</span>
     </div>
