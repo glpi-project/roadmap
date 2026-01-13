@@ -713,20 +713,12 @@ video {
   height: auto;
 }
 
-.max-h-20 {
-  max-height: 5rem;
+.max-h-24 {
+  max-height: 6rem;
 }
 
 .max-h-80 {
   max-height: 20rem;
-}
-
-.max-h-16 {
-  max-height: 4rem;
-}
-
-.max-h-24 {
-  max-height: 6rem;
 }
 
 .min-h-\[200px\] {
@@ -1768,10 +1760,6 @@ video {
     margin-bottom: 2.5rem;
   }
 
-  .sm\:max-h-24 {
-    max-height: 6rem;
-  }
-
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -1784,6 +1772,16 @@ video {
   .sm\:py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
+  }
+
+  .sm\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .sm\:py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 
   .sm\:text-4xl {

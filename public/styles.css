@@ -55,9 +55,6 @@ body {
     background-position: left 45px;
     background-repeat: no-repeat;
     position: relative;
-    @media (min-width: 1024px) {
-        min-height: 514px;
-    }
 
     &::before {
         content: "";
