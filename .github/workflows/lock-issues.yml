@@ -3,9 +3,13 @@ name: Lock and Redirect Issues
 on:
   issues:
     types: [opened]
+  schedule:
+    - cron: "0 0 * * *" # Every day at midnight
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
-  lock-or-redirect:
+  lock-new-issue:
+    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -20,3 +24,47 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
+
+      - name: Redirect Non-Maintainer Issue
+        if: |
+          !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR", "CONTRIBUTOR"]'), github.event.issue.author_association)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'Hi! This issues tracker is reserved for maintainers to track development tasks. For general support, questions, ideas, or bug reports, please use our [GitHub Discussions](https://github.com/glpi-project/roadmap/discussions) instead. Thank you!'
+            });
+
+  batch-lock-issues:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Batch Lock Maintainer Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const maintainerAssocs = ["OWNER", "MEMBER", "COLLABORATOR", "CONTRIBUTOR"];
+
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+            });
+
+            for (const issue of issues) {
+              if (issue.pull_request) continue; // Skip PRs
+
+              if (maintainerAssocs.includes(issue.author_association) && !issue.locked) {
+                console.log(`Locking issue #${issue.number} by ${issue.user.login} (${issue.author_association})`);
+                await github.rest.issues.lock({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                });
+              }
+            }
