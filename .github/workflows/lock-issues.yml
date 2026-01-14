@@ -10,13 +10,8 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Debug Association
-        run: |
-          echo "Author Association: ${{ github.event.issue.author_association }}"
-          echo "Actor: ${{ github.actor }}"
-
       - name: Lock Maintainer Issue
-        if: contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association)
+        if: contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR", "CONTRIBUTOR"]'), github.event.issue.author_association)
         uses: actions/github-script@v7
         with:
           script: |
