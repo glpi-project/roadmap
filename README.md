@@ -6,7 +6,7 @@ _This concerns [GLPI-Project](https://www.glpi-project.org/), [GLPI Network](htt
 
 ![board img](./public/pics/scene.svg)
 
-**Check 📅 https://roadmap.glpi-project.org** for a summary planning for the next years.
+**Check 📅 https://roadmap.glpi-project.org** for a summary planning of the next years.
 
 For a more technical view, you can also check the dedicated [GitHub project](https://github.com/orgs/glpi-project/projects/25/views/16) and the [backlog](https://github.com/glpi-project/roadmap/issues)
 
