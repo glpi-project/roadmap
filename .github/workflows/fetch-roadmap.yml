@@ -1,4 +1,4 @@
-name: Deploy Roadmap
+name: Deploy roadmap.glpi-project.org
 
 on:
   # Run every 6 hours
