@@ -1,0 +1,109 @@
+name: Assign to Project "Core team planning"
+
+on:
+  issues:
+    types: [assigned, unassigned]
+
+jobs:
+  manage_project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if assignee is in glpi-core-team
+        if: github.event.action == 'assigned'
+        id: check_member
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GLPI_PROJECT_TOKEN }}
+          script: |
+            const org = 'glpi-project';
+            const team_slug = 'glpi-core-team';
+            const username = context.payload.assignee.login;
+
+            try {
+              const response = await github.rest.teams.getMembershipForUserInOrg({
+                org,
+                team_slug,
+                username,
+              });
+
+              if (response.status === 200) {
+                console.log(`User ${username} is a member of ${team_slug}`);
+                return true;
+              }
+            } catch (error) {
+              if (error.status === 404) {
+                console.log(`User ${username} is NOT a member of ${team_slug}`);
+                return false;
+              }
+              throw error;
+            }
+            return false;
+
+      - name: Add to Project
+        if: github.event.action == 'assigned' && steps.check_member.outputs.result == 'true'
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/glpi-project/projects/28
+          github-token: ${{ secrets.GLPI_PROJECT_TOKEN }}
+
+      - name: Remove from Project
+        if: github.event.action == 'unassigned' && github.event.issue.assignees.length == 0
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GLPI_PROJECT_TOKEN }}
+          script: |
+            const issueNodeId = context.payload.issue.node_id;
+            const projectNumber = 28;
+
+            console.log(`Checking project items for issue ${issueNodeId}...`);
+
+            const query = `
+              query($issueId: ID!) {
+                node(id: $issueId) {
+                  ... on Issue {
+                    projectItems(first: 20) {
+                      nodes {
+                        id
+                        project {
+                          number
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            try {
+              const result = await github.graphql(query, { issueId: issueNodeId });
+
+              if (!result || !result.node || !result.node.projectItems) {
+                 console.log('No project items found.');
+                 return;
+              }
+
+              const items = result.node.projectItems.nodes;
+              const targetItem = items.find(item => item.project.number === projectNumber);
+
+              if (targetItem) {
+                console.log(`Found item ${targetItem.id} in project ${projectNumber} (Project ID: ${targetItem.project.id}). Deleting...`);
+                const deleteMutation = `
+                  mutation($projectId: ID!, $itemId: ID!) {
+                    deleteProjectV2Item(input: {projectId: $projectId, itemId: $itemId}) {
+                      deletedId
+                    }
+                  }
+                `;
+                await github.graphql(deleteMutation, {
+                  projectId: targetItem.project.id,
+                  itemId: targetItem.id
+                });
+                console.log(`Successfully deleted item.`);
+              } else {
+                console.log(`Issue is not in project ${projectNumber}. No action taken.`);
+              }
+            } catch (error) {
+              console.error(`Error removing item: ${error.message}`);
+              core.setFailed(error.message);
+            }
