@@ -91,7 +91,7 @@ jobs:
                 const deleteMutation = `
                   mutation($projectId: ID!, $itemId: ID!) {
                     deleteProjectV2Item(input: {projectId: $projectId, itemId: $itemId}) {
-                      deletedProjectV2ItemId
+                      deletedItemId
                     }
                   }
                 `;
