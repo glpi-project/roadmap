@@ -1,6 +1,6 @@
 # GLPI public roadmap
 
-_Explore our community-driven roadmap—a guide to our development journey, with major updates delivered every year._
+_Explore our community-driven roadmap guide to our development journey, with major updates delivered every year._
 
 _This concerns [GLPI-Project](https://www.glpi-project.org/), [GLPI Network](https://www.glpi-project.org/en/pricing/) and [plugins](https://plugins.glpi-project.org/#/author/24/plugins) managed by Teclib'._
 
