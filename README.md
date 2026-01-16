@@ -34,7 +34,7 @@ You can retrieve features associated to this label in [sub views of the technica
 
 ## Improving this dashboard
 
-Pull-requests are welcomed if you want to improve the [published app](https://roadmap.glpi-project.org/) but it's still preferable to open an issue to discuss with us before starting.
+Pull-requests are welcome if you want to improve the [published app](https://roadmap.glpi-project.org/) but it's still preferable to open an issue to discuss with us before starting.
 
 ## Notes
 
