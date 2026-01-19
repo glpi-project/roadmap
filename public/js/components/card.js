@@ -123,9 +123,19 @@ export function renderCard(issue) {
         `
                 : ""
         }
-        <a href="${issue.url}" target="_blank" rel="noopener" class="card-title font-medium text-gray-900 dark:text-white text-sm leading-snug hover:text-primary-600 dark:hover:text-primary-400 flex-1">
-          ${title}
-        </a>
+        ${
+            issue.isPrivate
+                ? `
+          <span class="card-title font-medium text-gray-900 dark:text-white text-sm leading-snug flex-1">
+            ${title}
+          </span>
+        `
+                : `
+          <a href="${issue.url}" target="_blank" rel="noopener" class="card-title font-medium text-gray-900 dark:text-white text-sm leading-snug hover:text-primary-600 dark:hover:text-primary-400 flex-1">
+            ${title}
+          </a>
+        `
+        }
       </div>
       ${
           issue.description

@@ -119,6 +119,9 @@ const QUERY = `
                   }
                 }
                 body
+                repository {
+                  isPrivate
+                }
                 subIssuesSummary {
                   total
                   completed
@@ -227,6 +230,7 @@ async function fetchAllItems() {
                                   node.content.subIssuesSummary.completed,
                           }
                         : null,
+                    isPrivate: node.content.repository?.isPrivate || false,
                     customFields,
                 };
             });
@@ -273,6 +277,7 @@ function groupByMilestone(items) {
             labels: item.labels,
             description: item.description,
             subIssues: item.subIssues,
+            isPrivate: item.isPrivate,
             customFields: item.customFields,
         });
     }
