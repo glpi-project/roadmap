@@ -130,8 +130,8 @@ export function renderCard(issue) {
       ${
           issue.description
               ? `
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3" title="${escapeHtml(issue.description)}">
-          ${truncateText(issue.description, 120)}
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3 whitespace-pre-wrap" title="${escapeHtml(issue.description)}">
+          ${truncateText(issue.description, 300)}
         </p>
       `
               : ""
