@@ -287,7 +287,7 @@ function showSuggestions(query) {
       ${limitedSuggestions
           .map(
               (s, i) => `
-        <button class="suggestion-item w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${i === 0 ? "bg-gray-50 dark:bg-gray-700/50" : ""}" data-type="${s.type}" data-value="${s.value.replace(/"/g, "&quot;")}">
+        <button class="suggestion-item w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 ${i === 0 ? "bg-gray-50 dark:bg-gray-700/50" : ""}" data-type="${s.type}" data-value="${s.value.replace(/"/g, "&quot;")}">
           ${s.icon}
           <span class="truncate">${s.display}</span>
           <span class="ml-auto text-xs text-gray-400">${s.type === "projectStatus" ? "status" : s.type === "label" ? "label" : "text"}</span>
