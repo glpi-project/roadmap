@@ -53,6 +53,18 @@ function showError(message) {
  */
 function renderBoard() {
     elements.columns.innerHTML = renderKanban(state.roadmapData.milestones);
+
+    // Initialize/Update tooltips
+    if (window.tippy) {
+        window.tippy(".status-dot", {
+            content: (reference) => reference.getAttribute("data-status"),
+            delay: [0, 0],
+            duration: [150, 100],
+            animation: "shift-away-subtle",
+            placement: "top",
+            theme: "material", // Using material theme as it looks good in both modes
+        });
+    }
 }
 
 /**
