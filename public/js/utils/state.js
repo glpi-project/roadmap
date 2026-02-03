@@ -120,7 +120,7 @@ export function sortIssuesByStatus(issues) {
             ? statusOrder.get(statusB)
             : statusOptions.length;
 
-        return indexA - indexB;
+        return indexB - indexA;
     });
 }
 
