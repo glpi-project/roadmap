@@ -52,8 +52,11 @@ jobs:
               query($issueId: ID!) {
                 node(id: $issueId) {
                   ... on Issue {
-                    parentIssue {
+                    parent {
                       id
+                    }
+                    trackedInIssues(first: 1) {
+                      totalCount
                     }
                   }
                 }
@@ -62,7 +65,7 @@ jobs:
 
             try {
               const result = await github.graphql(query, { issueId: issueNodeId });
-              const hasParent = result?.node?.parentIssue != null;
+              const hasParent = (result?.node?.parent != null) || (result?.node?.trackedInIssues?.totalCount > 0);
               console.log(`Issue has parent: ${hasParent}`);
               return hasParent;
             } catch (error) {
