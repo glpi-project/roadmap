@@ -52,7 +52,7 @@ jobs:
               query($issueId: ID!) {
                 node(id: $issueId) {
                   ... on Issue {
-                    parent {
+                    parentIssue {
                       id
                     }
                   }
@@ -62,7 +62,7 @@ jobs:
 
             try {
               const result = await github.graphql(query, { issueId: issueNodeId });
-              const hasParent = result?.node?.parent !== null;
+              const hasParent = result?.node?.parentIssue != null;
               console.log(`Issue has parent: ${hasParent}`);
               return hasParent;
             } catch (error) {
