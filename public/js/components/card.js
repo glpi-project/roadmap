@@ -146,7 +146,7 @@ export function renderCard(issue) {
     const statusColors = getStatusColors(projectStatus);
 
     return `
-    <div class="issue-card bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+    <div class="issue-card${cover ? " has-cover" : ""} bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
       <div class="flex items-start gap-2 mb-2">
         ${
             projectStatus
@@ -176,7 +176,7 @@ export function renderCard(issue) {
       ${
           text
               ? `
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3 whitespace-pre-wrap" title="${escapeHtml(text).replace(/"/g, "&quot;")}">${escapeHtml(truncateText(text, 300))}</p>
+        <p class="card-description text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3 whitespace-pre-wrap" title="${escapeHtml(text).replace(/"/g, "&quot;")}">${escapeHtml(truncateText(text, 300))}</p>
       `
               : ""
       }
