@@ -19,6 +19,39 @@
 </head>
 
 <body class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Dark-mode recolor for card illustrations, picked by luminance band:
+         dark ink (L < .26) -> pale blue, mid blue (.26-.38) -> soft blue, light surfaces (L >= .82) -> dark surface.
+         Yellow, skin and other mid tones are left as they are. -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <filter id="cover-dark" color-interpolation-filters="sRGB">
+            <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="lum" />
+            <feComponentTransfer in="lum" result="ink-band">
+                <feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+            </feComponentTransfer>
+            <feComponentTransfer in="lum" result="mid-band">
+                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+            </feComponentTransfer>
+            <feComponentTransfer in="lum" result="surface-band">
+                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1" />
+            </feComponentTransfer>
+            <feComposite in="ink-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="ink-mask" />
+            <feComposite in="mid-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="mid-mask" />
+            <feComposite in="surface-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="surface-mask" />
+            <feFlood flood-color="#d3ddf3" />
+            <feComposite in2="ink-mask" operator="in" result="ink" />
+            <feFlood flood-color="#7f97cc" />
+            <feComposite in2="mid-mask" operator="in" result="mid" />
+            <feFlood flood-color="#334058" />
+            <feComposite in2="surface-mask" operator="in" result="surface" />
+            <feMerge>
+                <feMergeNode in="SourceGraphic" />
+                <feMergeNode in="ink" />
+                <feMergeNode in="mid" />
+                <feMergeNode in="surface" />
+            </feMerge>
+        </filter>
+    </svg>
+
     <!-- Header & Hero Combined -->
     <header class="header-hero bg-[#00a5f3] dark:bg-gray-950 text-white relative">
         <!-- Absolute Utility Bar -->

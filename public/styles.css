@@ -428,6 +428,11 @@ body {
         width: 6rem;
         height: 4.5rem;
         object-fit: contain;
+
+        /* Recolor the light-theme illustration for dark cards (filter defined in index.html) */
+        .dark & {
+            filter: url(#cover-dark);
+        }
     }
 }
 
