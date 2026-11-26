@@ -19,36 +19,23 @@
 </head>
 
 <body class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
-    <!-- Dark-mode recolor for card illustrations, picked by luminance band:
-         dark ink (L < .26) -> pale blue, mid blue (.26-.38) -> soft blue, light surfaces (L >= .82) -> dark surface.
-         Yellow, skin and other mid tones are left as they are. -->
+    <!-- Dark-mode recolor for card illustrations: luminance is remapped continuously
+         (navy ink -> pale blue, mid blue -> soft blue, light surfaces -> dark surface); warm tones (yellow, skin) are kept. -->
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
         <filter id="cover-dark" color-interpolation-filters="sRGB">
-            <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="lum" />
-            <feComponentTransfer in="lum" result="ink-band">
-                <feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+            <!-- Greyscale by luminance, then a continuous gradient map: no hard thresholds, so downscaled edges stay smooth -->
+            <feColorMatrix in="SourceGraphic" type="matrix" values=".2125 .7154 .0721 0 0 .2125 .7154 .0721 0 0 .2125 .7154 .0721 0 0 0 0 0 1 0" />
+            <feComponentTransfer result="mapped">
+                <feFuncR type="table" tableValues="0.902 0.896 0.89 0.883 0.877 0.871 0.865 0.858 0.852 0.846 0.84 0.834 0.827 0.718 0.608 0.498 0.498 0.498 0.498 0.498 0.498 0.484 0.47 0.455 0.441 0.427 0.413 0.399 0.385 0.37 0.356 0.342 0.328 0.314 0.299 0.285 0.271 0.257 0.243 0.228 0.214 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2" />
+                <feFuncG type="table" tableValues="0.925 0.921 0.916 0.911 0.906 0.901 0.896 0.891 0.886 0.881 0.876 0.872 0.867 0.775 0.684 0.592 0.592 0.592 0.592 0.592 0.592 0.576 0.56 0.543 0.527 0.511 0.495 0.478 0.462 0.446 0.43 0.413 0.397 0.381 0.365 0.348 0.332 0.316 0.3 0.283 0.267 0.251 0.251 0.251 0.251 0.251 0.251 0.251 0.251 0.251 0.251" />
+                <feFuncB type="table" tableValues="0.973 0.971 0.969 0.968 0.966 0.964 0.963 0.961 0.959 0.958 0.956 0.955 0.953 0.902 0.851 0.8 0.8 0.8 0.8 0.8 0.8 0.778 0.757 0.735 0.713 0.692 0.67 0.648 0.627 0.605 0.583 0.562 0.54 0.518 0.497 0.475 0.453 0.432 0.41 0.388 0.367 0.345 0.345 0.345 0.345 0.345 0.345 0.345 0.345 0.345 0.345" />
             </feComponentTransfer>
-            <feComponentTransfer in="lum" result="mid-band">
-                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
-            </feComponentTransfer>
-            <feComponentTransfer in="lum" result="surface-band">
-                <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1" />
-            </feComponentTransfer>
-            <feComposite in="ink-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="ink-mask" />
-            <feComposite in="mid-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="mid-mask" />
-            <feComposite in="surface-band" in2="SourceAlpha" operator="arithmetic" k1="1" result="surface-mask" />
-            <feFlood flood-color="#d3ddf3" />
-            <feComposite in2="ink-mask" operator="in" result="ink" />
-            <feFlood flood-color="#7f97cc" />
-            <feComposite in2="mid-mask" operator="in" result="mid" />
-            <feFlood flood-color="#334058" />
-            <feComposite in2="surface-mask" operator="in" result="surface" />
-            <feMerge>
-                <feMergeNode in="SourceGraphic" />
-                <feMergeNode in="ink" />
-                <feMergeNode in="mid" />
-                <feMergeNode in="surface" />
-            </feMerge>
+            <!-- Warm weight from R - B: yellow accents and skin tones keep their original colour -->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5.882 0 -5.882 0 -0.471" result="warm" />
+            <feColorMatrix in="warm" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 1" result="cool" />
+            <feComposite in="SourceGraphic" in2="warm" operator="in" result="kept" />
+            <feComposite in="mapped" in2="cool" operator="in" result="recolored" />
+            <feComposite in="kept" in2="recolored" operator="arithmetic" k2="1" k3="1" />
         </filter>
     </svg>
 
