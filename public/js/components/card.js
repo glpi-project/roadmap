@@ -95,6 +95,29 @@ function renderSubIssuesProgress(subIssues) {
   `;
 }
 
+// First image of an issue body: HTML <img src="..."> (GitHub's paste format) or markdown ![alt](url)
+const IMAGE_PATTERN = /<img\b[^>]*?\bsrc=["']([^"']+)["'][^>]*>|!\[[^\]]*\]\(\s*<?([^)\s>]+)>?[^)]*\)/i;
+
+/**
+ * Split an issue body into its first image (used as the card cover) and the remaining text
+ * @param {string} description - Raw issue body
+ * @returns {{cover: string|null, text: string}}
+ */
+function extractCover(description) {
+    if (!description) return { cover: null, text: "" };
+
+    const match = description.match(IMAGE_PATTERN);
+    if (!match) return { cover: null, text: description.trim() };
+
+    const text = (description.slice(0, match.index) + description.slice(match.index + match[0].length)).trim();
+    try {
+        const url = new URL(match[1] || match[2]);
+        return { cover: url.protocol === "https:" ? url.href : null, text };
+    } catch {
+        return { cover: null, text };
+    }
+}
+
 /**
  * Render an issue card
  * @param {Object} issue - Issue object
@@ -104,6 +127,7 @@ export function renderCard(issue) {
     const labelsHtml = renderLabels(issue.labels);
     const title = highlightText(issue.title, state.filters.text);
     const subIssuesHtml = renderSubIssuesProgress(issue.subIssues);
+    const { cover, text } = extractCover(issue.description);
 
     // Get project status
     const projectStatus = issue.customFields?.Status?.value;
@@ -136,10 +160,11 @@ export function renderCard(issue) {
         `
         }
       </div>
+      ${cover ? `<img class="card-cover" src="${escapeHtml(cover).replace(/"/g, "&quot;")}" alt="" loading="lazy" decoding="async">` : ""}
       ${
-          issue.description
+          text
               ? `
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3 whitespace-pre-wrap" title="${escapeHtml(issue.description)}">${truncateText(issue.description, 300)}</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1 leading-relaxed line-clamp-3 whitespace-pre-wrap" title="${escapeHtml(text).replace(/"/g, "&quot;")}">${escapeHtml(truncateText(text, 300))}</p>
       `
               : ""
       }

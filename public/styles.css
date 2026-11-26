@@ -401,6 +401,15 @@ body {
     }
 }
 
+/* Illustration taken from the issue body, capped so it never dominates the card */
+.card-cover {
+    display: block;
+    width: 100%;
+    height: 5rem;
+    margin-top: 0.5rem;
+    object-fit: contain;
+}
+
 /* Sub-issues progress bar */
 .sub-issues-progress {
     display: flex;
