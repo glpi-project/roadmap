@@ -96,7 +96,19 @@ function renderSubIssuesProgress(subIssues) {
 }
 
 // First image of an issue body: HTML <img src="..."> (GitHub's paste format) or markdown ![alt](url)
-const IMAGE_PATTERN = /<img\b[^>]*?\bsrc=["']([^"']+)["'][^>]*>|!\[[^\]]*\]\(\s*<?([^)\s>]+)>?[^)]*\)/i;
+// Quantifiers are bounded and only the start of the body is scanned, so a crafted body cannot stall the page
+const IMAGE_PATTERN =
+    /<img\b[^>]{0,500}?\bsrc=["']([^"']{1,2000})["'][^>]{0,500}>|!\[[^\]]{0,500}\]\(\s*<?([^)\s>]{1,2000})>?[^)]{0,500}\)/i;
+const IMAGE_SCAN_LENGTH = 5000;
+
+// Covers are only loaded from GitHub's own image hosts, so an issue body cannot make viewers fetch from elsewhere
+function isTrustedImageHost(url) {
+    return (
+        url.protocol === "https:" &&
+        ((url.hostname === "github.com" && url.pathname.startsWith("/user-attachments/")) ||
+            url.hostname.endsWith(".githubusercontent.com"))
+    );
+}
 
 /**
  * Split an issue body into its first image (used as the card cover) and the remaining text
@@ -106,13 +118,13 @@ const IMAGE_PATTERN = /<img\b[^>]*?\bsrc=["']([^"']+)["'][^>]*>|!\[[^\]]*\]\(\s*
 function extractCover(description) {
     if (!description) return { cover: null, text: "" };
 
-    const match = description.match(IMAGE_PATTERN);
+    const match = description.slice(0, IMAGE_SCAN_LENGTH).match(IMAGE_PATTERN);
     if (!match) return { cover: null, text: description.trim() };
 
     const text = (description.slice(0, match.index) + description.slice(match.index + match[0].length)).trim();
     try {
         const url = new URL(match[1] || match[2]);
-        return { cover: url.protocol === "https:" ? url.href : null, text };
+        return { cover: isTrustedImageHost(url) ? url.href : null, text };
     } catch {
         return { cover: null, text };
     }
@@ -160,7 +172,7 @@ export function renderCard(issue) {
         `
         }
       </div>
-      ${cover ? `<img class="card-cover" src="${escapeHtml(cover).replace(/"/g, "&quot;")}" alt="" loading="lazy" decoding="async">` : ""}
+      ${cover ? `<img class="card-cover" src="${escapeHtml(cover).replace(/"/g, "&quot;")}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ""}
       ${
           text
               ? `
